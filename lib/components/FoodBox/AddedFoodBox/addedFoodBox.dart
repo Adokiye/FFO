@@ -12,6 +12,7 @@ class AddedFoodBox extends StatelessWidget {
     return new Container(
         width: MediaQuery.of(context).size.width * 0.85,
         height: 69.0,
+        margin: EdgeInsets.only(top: 5.0),
         decoration: boxDecorationStyle,
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 21.0),

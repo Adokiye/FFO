@@ -9,7 +9,7 @@ class CookButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      fillColor: const Color(0xffEF383F),
+      fillColor: const Color(0xffFBAE17),
       elevation: 3.0,
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(4.0),
