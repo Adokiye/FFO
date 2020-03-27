@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'styles.dart';
 
 class RecipeFoodBox extends StatelessWidget {
@@ -6,13 +7,17 @@ class RecipeFoodBox extends StatelessWidget {
   final String time;
   final String imageUrl;
   final GestureTapCallback onPressed;
- RecipeFoodBox({@required this.text, @required this.onPressed, @required this.time, this.imageUrl});
+  RecipeFoodBox(
+      {@required this.text,
+      @required this.onPressed,
+      @required this.time,
+      this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
     return new RawMaterialButton(
       fillColor: Color.fromRGBO(230, 230, 230, 0.5),
-     // elevation: 3.0,
+      // elevation: 3.0,
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(6.0),
       ),
@@ -24,16 +29,55 @@ class RecipeFoodBox extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            imageUrl != '' ? 
-          CachedNetworkImage(
-   imageUrl: imageUrl,
-   placeholder: (context, url) => new CircularProgressIndicator(),
-   errorWidget: (context, url, error) => new Icon(Icons.error),
- ) : Container(),
- Column(children: <Widget>[
-   Text(text, style: foodNameStyle)
- ],)
-        ],),
+            imageUrl != ''
+                ?  Container(
+                    margin: EdgeInsets.only(right: 10.0),
+                    height: 80.0,
+                    width: 80.0,
+                    decoration: imageDecorationStyle,
+                    child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: imageUrl,
+                  ))
+                : Container(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Spacer(),
+                Text(text, style: foodNameStyle),
+                Spacer(),
+                Row(children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Text(
+                        time,
+                        style: subTextStyle,
+                      )),
+                  Image.asset(
+                    'assets/images/clock.png',
+                    height: 18,
+                    width: 18,
+                    fit: BoxFit.contain,
+                  ),
+                  Spacer(),
+                  Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Text(
+                        'View Details',
+                        style: subTextStyle,
+                      )),
+                  Image.asset(
+                    'assets/images/clock.png',
+                    height: 18,
+                    width: 18,
+                    fit: BoxFit.contain,
+                  ),
+                  Spacer(),
+                ])
+              ],
+            )
+          ],
+        ),
       ),
       onPressed: onPressed,
     );

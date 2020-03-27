@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'styles.dart';
 
 class AddedFoodBox extends StatelessWidget {
@@ -21,13 +22,13 @@ class AddedFoodBox extends StatelessWidget {
               children: <Widget>[
                 imageUrl != '' ?
                 Container(
-                    margin: EdgeInsets.only(right: 10),
-                    child: Image.asset(
-                      imageUrl,
-                      height: 30,
-                      width: 30,
-                      fit: BoxFit.contain,
-                    )): Container(),
+                    margin: EdgeInsets.only(right: 10.0),
+                    height: 30.0,
+                    width: 30.0,
+                    child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: imageUrl,
+                  )): Container(),
                 Text(
                   text,
                   style: foodNameStyle,
