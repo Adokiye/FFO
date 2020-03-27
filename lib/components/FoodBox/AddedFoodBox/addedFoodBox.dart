@@ -19,6 +19,7 @@ class AddedFoodBox extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                imageUrl != '' ?
                 Container(
                     margin: EdgeInsets.only(right: 10),
                     child: Image.asset(
@@ -26,7 +27,7 @@ class AddedFoodBox extends StatelessWidget {
                       height: 30,
                       width: 30,
                       fit: BoxFit.contain,
-                    )),
+                    )): Container(),
                 Text(
                   text,
                   style: foodNameStyle,

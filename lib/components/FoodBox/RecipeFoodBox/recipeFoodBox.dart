@@ -24,11 +24,13 @@ class RecipeFoodBox extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            imageUrl != '' ? 
           CachedNetworkImage(
    imageUrl: imageUrl,
    placeholder: (context, url) => new CircularProgressIndicator(),
    errorWidget: (context, url, error) => new Icon(Icons.error),
- ),
+ ) : Container(),
+ Column(children: <Widget>[],)
         ],),
       ),
       onPressed: onPressed,
