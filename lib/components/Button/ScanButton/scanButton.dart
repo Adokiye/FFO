@@ -15,6 +15,7 @@ class ScanButton extends StatelessWidget {
       ),
       child: Container(
         width: 121.0,
+        height: 37.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
