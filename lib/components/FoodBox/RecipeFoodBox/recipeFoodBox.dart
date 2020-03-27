@@ -6,7 +6,7 @@ class RecipeFoodBox extends StatelessWidget {
   final String time;
   final String imageUrl;
   final GestureTapCallback onPressed;
-  AddFoodBox({@required this.text, @required this.onPressed, @required this.time, this.imageUrl});
+ RecipeFoodBox({@required this.text, @required this.onPressed, @required this.time, this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,9 @@ class RecipeFoodBox extends StatelessWidget {
    placeholder: (context, url) => new CircularProgressIndicator(),
    errorWidget: (context, url, error) => new Icon(Icons.error),
  ) : Container(),
- Column(children: <Widget>[],)
+ Column(children: <Widget>[
+   Text(text, style: foodNameStyle)
+ ],)
         ],),
       ),
       onPressed: onPressed,
