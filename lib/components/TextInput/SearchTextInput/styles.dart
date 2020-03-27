@@ -24,3 +24,8 @@ TextStyle hintStyle1 = TextStyle(
   fontSize: 13.0,
   color: const Color(0xff979797),
 );
+
+TextStyle enteredTextStyle1 = TextStyle(
+  fontSize: 13.0,
+  color: Colors.black,
+);
