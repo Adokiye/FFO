@@ -30,6 +30,7 @@ class _MenuBarState extends State<MenuBar> {
     return new Container(
       width: MediaQuery.of(context).size.width * 0.85,
       height: 51.0,
+      margin: EdgeInsets.only(top: 21.0),
       decoration: parentDecorationStyle,
       child: Expanded(
         child: Row(
