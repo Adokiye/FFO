@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
 
-class CookButton extends StatelessWidget {
- // final String text;
+class YellowButton extends StatelessWidget {
+  final String text;
   final GestureTapCallback onPressed;
-  CookButton({@required this.onPressed});
+  YellowButton({@required this.onPressed, @required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class CookButton extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width * 0.85,
         height: 47.0,
-        child: Center(child: Text('COOK', style: cookTextStyle,),),
+        child: Center(child: Text(text, style: cookTextStyle,),),
       ),
       onPressed: onPressed,
     );
