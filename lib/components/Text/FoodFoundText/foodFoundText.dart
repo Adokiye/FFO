@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
 
-class HeaderText extends StatelessWidget {
+class FoodFoundText extends StatelessWidget {
   final String text;
-  HeaderText({@required this.text});
+  FoodFoundText({@required this.text});
 
   @override
   Widget build(BuildContext context) {
-    return new Text(text, style: headerStyle);
+    return new Text(text, style: foodFoundStyle);
   }
 }
