@@ -1,4 +1,4 @@
-import 'package:ffo/components/ImageFoundHeader/styles.dart';
+import 'styles.dart';
 import 'package:flutter/material.dart';
 
 class ImageFoundHeader extends StatelessWidget {
@@ -16,7 +16,6 @@ class ImageFoundHeader extends StatelessWidget {
         children: <Widget>[
                RawMaterialButton(
       fillColor: Color.fromRGBO(0, 0, 0, 0.5),
-      elevation: 3.0,
       shape: circleShape,
       child: Container(
         width: 40.0,
