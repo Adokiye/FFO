@@ -29,18 +29,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
 
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(80.0), // here the desired height
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: AppBar(
-                automaticallyImplyLeading: false,
-                title: AppBarComponent(),
-                elevation: 25.0,
-                backgroundColor: const Color(0xff00ADEF),
-                centerTitle: true,
-              ),
-            )),
         body: Container(
           color: Colors.white,
           child: SafeArea(
