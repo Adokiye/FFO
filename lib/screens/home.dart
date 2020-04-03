@@ -12,9 +12,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          color: Colors.white,
-          child: SafeArea(
+      backgroundColor: Colors.white,
+        body: SafeArea(
               child: SingleChildScrollView(
             child: Expanded(
                 child: Column(
@@ -23,6 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     
                           ])
            ) )),
-        ));
+        );
   }
 }
