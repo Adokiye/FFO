@@ -40,10 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   
-                          ]))
-                ],
-              ),
-            ),
+                          ])
+                
+              
+            
            ) )),
         ));
 
