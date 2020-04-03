@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/Text/HeaderText/headerText.dart'
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -19,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                    
+                    HeaderText('Add your ingredients')
                           ])
            ) )),
         );
