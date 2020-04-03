@@ -33,8 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.white,
           child: SafeArea(
               child: SingleChildScrollView(
-            child: Center(
-              child: Container(
+            child: Expanded(
             //    height: MediaQuery.of(context).size.height,
                 child: Column(
             //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
