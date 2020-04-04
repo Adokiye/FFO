@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
 
-class HeaderText extends StatelessWidget {
+class LightText extends StatelessWidget {
   final String text;
-  HeaderText({@required this.text});
+  LightText({@required this.text});
 
   @override
   Widget build(BuildContext context) {
