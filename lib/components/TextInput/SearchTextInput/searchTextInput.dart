@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
-
-class SearchTextInput extends StatelessWidget {
-  // final String text;
-  // SearchTextInput({@required this.text});
-
+class SearchTextInput extends StatefulWidget { 
+  final textController = TextEditingController();
+  SearchTextInput({@required textController});
+  @override
+  SearchTextInputState createState() {
+   return new SearchTextInputState();
+  }
+}
+class SearchTextInputState extends State<SearchTextInput> { 
   @override
   Widget build(BuildContext context) {
     return new Material(
@@ -14,6 +18,7 @@ class SearchTextInput extends StatelessWidget {
           width:  MediaQuery.of(context).size.width * 0.85,
           height: 51.0,
           child: TextField(
+            controller: widget.textController,
             style: enteredTextStyle1,
           decoration: inputDecoration1,
           keyboardType: TextInputType.text,

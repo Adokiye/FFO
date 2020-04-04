@@ -19,15 +19,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Ingredients> items;
+  List<Ingredients> newItems;
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
-
+  TextEditingController textController;
+     textListener() {
+       print(textController.text);
+        setState(() {
+        this.newItems = items.where((item) => item.name.toString().split(" ").contains(textController.text)).toList();  
+      });
+  }
+ 
   @override
   void initState() {
     super.initState();
- 
     items = new List();
- 
     ingredientsSub?.cancel();
     ingredientsSub = db.getIngredientsList().listen((QuerySnapshot snapshot) {
       final List<Ingredients> ings = snapshot.documents
@@ -38,12 +44,14 @@ class _MyHomePageState extends State<MyHomePage> {
         this.items = ings;
       });
     });
+    textController.addListener(textListener);
   }
  
   @override
   void dispose() {
     ingredientsSub?.cancel();
     super.dispose();
+    textController.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -67,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: ScanButton(
                     onPressed: null,
                   )),
-              SearchTextInput(),
+              SearchTextInput(textController: this.textController,),
               AddFoodBox(text: 'Tomato',onPressed: null,),
               AddFoodBox(text: 'Tomato Paste',onPressed: null,)
             ]))),
