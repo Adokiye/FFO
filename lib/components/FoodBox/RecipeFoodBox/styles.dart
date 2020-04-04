@@ -12,3 +12,8 @@ TextStyle subTextStyle = TextStyle(fontFamily: 'Poppins',
 
 BoxDecoration imageDecorationStyle =
     BoxDecoration(borderRadius: new BorderRadius.circular(6.0));
+
+BoxDecoration boxDecorationStyle = BoxDecoration(
+  color: Color.fromRGBO(230, 230, 230, 0.5),
+  borderRadius: new BorderRadius.circular(6.0),
+  );

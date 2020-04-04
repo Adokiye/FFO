@@ -15,15 +15,10 @@ class RecipeFoodBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new RawMaterialButton(
-      fillColor: Color.fromRGBO(230, 230, 230, 0.5),
-      // elevation: 3.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(6.0),
-      ),
-      child: Container(
+    return new Container(
         width: MediaQuery.of(context).size.width * 0.85,
         height: 100.0,
+           decoration: boxDecorationStyle,
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         margin: EdgeInsets.only(top: 25.0),
         child: Row(
@@ -40,7 +35,8 @@ class RecipeFoodBox extends StatelessWidget {
                     image: imageUrl,
                   ))
                 : Container(),
-            Column(
+            Expanded
+            (child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Spacer(),
@@ -75,11 +71,9 @@ class RecipeFoodBox extends StatelessWidget {
                   Spacer(),
                 ])
               ],
-            )
+             ) )
           ],
         ),
-      ),
-      onPressed: onPressed,
-    );
+      );
   }
 }
