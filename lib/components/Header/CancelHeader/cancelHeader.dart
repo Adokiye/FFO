@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 
-class ImageFoundHeader extends StatelessWidget {
+class CancelHeader extends StatelessWidget {
  // final String text;
   final GestureTapCallback onPressed;
-  ImageFoundHeader({@required this.onPressed});
+  CancelHeader({@required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
