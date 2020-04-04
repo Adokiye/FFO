@@ -7,7 +7,9 @@ class ScanButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.85,
+      child: RawMaterialButton(
       fillColor: const Color(0xffEF383F),
       elevation: 3.0,
       shape: RoundedRectangleBorder(
@@ -35,6 +37,7 @@ class ScanButton extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
+      )
     );
   }
 }

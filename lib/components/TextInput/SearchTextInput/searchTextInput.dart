@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'styles.dart';
 
 class SearchTextInput extends StatelessWidget {
-  final String text;
-  SearchTextInput({@required this.text});
+  // final String text;
+  // SearchTextInput({@required this.text});
 
   @override
   Widget build(BuildContext context) {

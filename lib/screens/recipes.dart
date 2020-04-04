@@ -5,22 +5,21 @@ import '../components/TextInput/SearchTextInput/searchTextInput.dart';
 import '../components/Button/YellowButton/yellowButton.dart';
 import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class Recipes extends StatefulWidget {
+  Recipes({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _RecipesState createState() => _RecipesState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _RecipesState extends State<Recipes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: Stack(children: <Widget>[
-        SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Expanded(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,14 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SearchTextInput(),
               AddFoodBox(text: 'Tomato',onPressed: null,),
               AddFoodBox(text: 'Tomato Paste',onPressed: null,)
-            ]))),
-        Positioned(
-            bottom: 40,
-            child: YellowButton(
-              text: 'COOK',
-              onPressed: null,
-            ))
-      ])),
+            ]))),),
     );
   }
 }
