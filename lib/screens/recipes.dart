@@ -36,7 +36,8 @@ class _RecipesState extends State<Recipes> {
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  
+                  RecipeFoodBox(text: 'Jollof Rice', onPressed: null, time: '20mins',),
+                  RecipeFoodBox(text: 'Fried Rice', onPressed: null, time: '20mins',)
                 ],),
             )
             ])
