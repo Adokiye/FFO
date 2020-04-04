@@ -3,15 +3,18 @@ import 'styles.dart';
 
 class AddFoodBox extends StatelessWidget {
   final String text;
-  final GestureTapCallback onPressed;
+  final Function() onPressed;
   AddFoodBox({@required this.text, @required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return new Material(
+    return new SizedBox(
+      width: MediaQuery.of(context).size.width * 0.85,
+                height: 51.0,
+      child: Material(
         color: Colors.white,
         child: InkWell(
-            onTap: onPressed,
+            onTap:() => onPressed,
             child: Container(
                 width: MediaQuery.of(context).size.width * 0.85,
                 height: 51.0,
@@ -30,6 +33,6 @@ class AddFoodBox extends StatelessWidget {
                           '+',
                           style: plusStyle),
                       ],
-                    )))));
+                    ))))));
   }
 }

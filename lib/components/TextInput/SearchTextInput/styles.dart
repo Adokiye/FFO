@@ -20,12 +20,12 @@ InputDecoration inputDecoration1 = InputDecoration(
   ),
 );
 
-TextStyle hintStyle1 = TextStyle(
+TextStyle hintStyle1 = TextStyle(fontFamily: 'Poppins',
   fontSize: 13.0,
   color: const Color(0xff979797),
 );
 
-TextStyle enteredTextStyle1 = TextStyle(
+TextStyle enteredTextStyle1 = TextStyle(fontFamily: 'Poppins',
   fontSize: 13.0,
   color: Colors.black,
 );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
 class SearchTextInput extends StatefulWidget { 
-  final textController = TextEditingController();
+  TextEditingController textController;
   SearchTextInput({@required textController});
   @override
   SearchTextInputState createState() {

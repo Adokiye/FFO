@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import '../components/Text/HeaderText/headerText.dart';
 import '../components/Button/ScanButton/scanButton.dart';
-import '../components/TextInput/SearchTextInput/searchTextInput.dart';
+import '../components/TextInput/SearchTextInput/styles.dart';
 import '../components/Button/YellowButton/yellowButton.dart';
 import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +10,7 @@ import 'package:ffo/helpers/firebase.dart';
 import 'package:ffo/models/ingredients.dart';
 import '../components/FoodBox/AddedFoodBox/addedFoodBox.dart';
 import 'package:ffo/screens/recipes.dart';
+import 'dart:convert';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -22,25 +23,19 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Ingredients> items;
   List<Ingredients> newItems;
-  List<Ingredients> chosenItems;
-  List<String> chosenNames;
+  List<Ingredients> chosenItems = List<Ingredients>();
+  List<String> chosenNames = List<String>();
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
-  TextEditingController textController;
-  textListener() {
-    print(textController.text);
-    setState(() {
-      this.newItems = items
-          .where((item) =>
-              item.name.toString().split(" ").contains(textController.text))
-          .toList();
-    });
-  }
+  final textController = TextEditingController();
 
   _setChosen(Ingredients ingredient) {
-    this.chosenItems.add(ingredient);
-    this.chosenNames.add(ingredient.name);
-    this.newItems = new List();
+    print(ingredient);
+    setState((){
+       chosenItems.add(ingredient);
+    chosenNames.add(ingredient.name);
+    newItems = new List();
+    });
   }
 
   @override
@@ -52,12 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
       final List<Ingredients> ings = snapshot.documents
           .map((documentSnapshot) => Ingredients.fromMap(documentSnapshot.data))
           .toList();
-
       setState(() {
         this.items = ings;
+        
       });
     });
-    textController.addListener(textListener);
+    textController.addListener(_textListener);
   }
 
   @override
@@ -66,49 +61,75 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
     textController.dispose();
   }
+    _textListener() {
+     // print(newItems.length);
+    setState(() {
+      newItems = items
+          .where((item) =>
+              item.name.toString().contains(this.textController.text))
+          .toList();
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: Stack(children: <Widget>[
-        SingleChildScrollView(
-            child: Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+          child: Center(
+            child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Stack(children: <Widget>[SingleChildScrollView(
+            child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    
                     children: <Widget>[
-              HeaderText(
+                      Center(child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 10.0),
+                        child: HeaderText(
                 text: 'Add your ingredients',
-              ),
-              HeaderText(
+              ),)),
+              Center(child: HeaderText(
                 text: 'Find your perfect recipe. ',
-              ),
+              ),),
               Container(
-                  margin: EdgeInsets.symmetric(vertical: 36.0),
-                  child: ScanButton(
+                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075) ,
+                margin: EdgeInsets.symmetric(vertical: 18.0),
+              child: ScanButton(
                     onPressed: null,
-                  )),
-              SearchTextInput(
-                textController: textController,
-              ),
-              // AddFoodBox(
-              //   text: 'Tomato',
-              //   onPressed: null,
-              // ),
-              // AddFoodBox(
-              //   text: 'Tomato Paste',
-              //   onPressed: null,
-              // ),
-              ListView.builder(
+                  ))
+              ,
+              Center(
+                child: Material(
+        elevation: 3.0,
+        shadowColor: Color.fromRGBO(0, 0, 0, 0.14),
+        child: Container(
+          width:  MediaQuery.of(context).size.width * 0.85,
+          height: 51.0,
+          child: TextField(
+            controller: textController,
+            style: enteredTextStyle1,
+          decoration: inputDecoration1,
+          keyboardType: TextInputType.text,
+        )))),
+            textController.text != '' ?  ListView.builder(
+              scrollDirection: Axis.vertical,
+    shrinkWrap: true,
                   itemCount: newItems.length,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    return new AddFoodBox(
+                    print(newItems[index]);
+                    return new Container(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: AddFoodBox(
                       text: newItems[index].name,
-                      onPressed: _setChosen(newItems[index]),
-                    );
-                  }),
-              ListView.builder(
+                      onPressed: null, //_setChosen(newItems[index]),
+                    ));
+                  }):Container(),
+            chosenNames.length >0 ?  ListView.builder(
+              scrollDirection: Axis.vertical,
+    shrinkWrap: true,
                   itemCount: chosenItems.length,
                   itemBuilder: (BuildContext ctxt, int index) {
                     return new AddedFoodBox(
@@ -116,22 +137,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       imageUrl: chosenItems[index].image,
                       onPressed: null,
                     );
-                  })
-            ]))),
-     chosenNames.length > 0 ?   Positioned(
+                  }):Container()
+            ])),
+     Positioned(
             bottom: 40,
-            child: YellowButton(
+            left: MediaQuery.of(context).size.width*0.075,
+            child: Align(
+              alignment: Alignment.center,
+              child: YellowButton(
               text: 'COOK',
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Recipes(ing: chosenNames, title: 'Recipes'),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => Recipes(ing: chosenNames, title: 'Recipes'),
+                //   ),
+                // );
               },
-            )) : null
+       )  ))
       ])),
-    );
+        
+        )
+     ) );
   }
 }

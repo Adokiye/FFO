@@ -8,4 +8,4 @@ BoxDecoration boxDecorationStyle = BoxDecoration(
   borderRadius: new BorderRadius.circular(5.0),
   );
 
-TextStyle foodNameStyle = TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w500);
+TextStyle foodNameStyle = TextStyle(fontFamily: 'Poppins',color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w500);

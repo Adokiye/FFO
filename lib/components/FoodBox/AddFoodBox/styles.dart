@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 
-TextStyle plusStyle = TextStyle(
+TextStyle plusStyle = TextStyle(fontFamily: 'Poppins',
                               color: const Color(0xffFBAE17),
-                              fontSize: 20.0,
+                              fontSize: 23.0,
                               fontWeight: FontWeight.w500);
 
 BoxDecoration boxDecorationStyle = BoxDecoration(boxShadow: [
@@ -22,4 +22,4 @@ BoxDecoration boxDecorationStyle = BoxDecoration(boxShadow: [
       ),
     ));
 
-TextStyle foodNameStyle = TextStyle(color: Colors.black, fontSize: 15.0);
+TextStyle foodNameStyle = TextStyle(fontFamily: 'Poppins',color: Colors.black, fontSize: 17.0);

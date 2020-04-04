@@ -7,9 +7,8 @@ class ScanButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.85,
-      child: RawMaterialButton(
+    return RawMaterialButton(
+      constraints: BoxConstraints.tight(Size(121, 37)),
       fillColor: const Color(0xffEF383F),
       elevation: 3.0,
       shape: RoundedRectangleBorder(
@@ -31,13 +30,13 @@ class ScanButton extends StatelessWidget {
             Text(
               'Scan to add',
               //        textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 13.0),
+              style: TextStyle(fontFamily: 'Poppins',color: Colors.white, fontSize: 13.0),
             ),
           ],
         ),
       ),
       onPressed: onPressed,
-      )
+      
     );
   }
 }

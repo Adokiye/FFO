@@ -36,7 +36,7 @@ class AddedFoodBox extends StatelessWidget {
                 Spacer(),
                 Material(
                     child: InkWell(
-                        onTap: onPressed,
+                        onTap: () => onPressed,
                         child: Icon(
                           Icons.delete_outline,
                           color: const Color(0xffEF383F),

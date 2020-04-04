@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 TextStyle unpressedTextStyle =
-    TextStyle(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w600);
+    TextStyle(fontFamily: 'Poppins',color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w600);
 
 TextStyle pressedTextStyle =
-    TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w600);
+    TextStyle(fontFamily: 'Poppins',color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w600);
 
 BoxDecoration parentDecorationStyle = BoxDecoration(
     border: Border.all(
