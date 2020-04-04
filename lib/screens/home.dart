@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
             bottom: 40,
             child: YellowButton(
               text: 'COOK',
-              onPressed: null,
+              onPressed: (){Navigator.pushNamed(context, '/recipes');},
             ))
       ])),
     );
