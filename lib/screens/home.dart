@@ -7,6 +7,7 @@ import '../components/Button/YellowButton/yellowButton.dart';
 import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ffo/helpers/firebase.dart';
+import 'package:ffo/models/ingredients.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -17,7 +18,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> ingredients;
+  List<Ingredients> items;
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
 
@@ -28,13 +29,13 @@ class _MyHomePageState extends State<MyHomePage> {
     items = new List();
  
     ingredientsSub?.cancel();
-    ingredientsSub = db.getNoteList().listen((QuerySnapshot snapshot) {
-      final List<Note> notes = snapshot.documents
-          .map((documentSnapshot) => Note.fromMap(documentSnapshot.data))
+    ingredientsSub = db.getIngredientsList().listen((QuerySnapshot snapshot) {
+      final List<Ingredients> ings = snapshot.documents
+          .map((documentSnapshot) => Ingredients.fromMap(documentSnapshot.data))
           .toList();
  
       setState(() {
-        this.items = notes;
+        this.items = ings;
       });
     });
   }
