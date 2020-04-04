@@ -17,12 +17,11 @@ class _RecipesState extends State<Recipes> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children:<Widget>[
                 Container(
-              width: MediaQuery.of(context).size.width * 0.85,
+              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075),
               margin: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
                     child: InkWell(
@@ -30,10 +29,12 @@ class _RecipesState extends State<Recipes> {
                         child: Icon(
                           Icons.arrow_back_ios,
                           color: const Color(0xffEF383F),
-                          size: 20.0,
+                          size: 24.0,
                         ))),
             ),
-            HeaderText(text: 'Recipes Found',),
+            Container(
+              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075),
+            child: HeaderText(text: 'Recipes Found',)),
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -41,7 +42,7 @@ class _RecipesState extends State<Recipes> {
                   RecipeFoodBox(text: 'Fried Rice', onPressed: null, time: '20mins',)
                 ],),
             )
-            ])
+            ]
           ),),
     );
   }
