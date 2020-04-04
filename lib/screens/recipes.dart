@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import '../components/Text/HeaderText/headerText.dart';
 import '../components/FoodBox/RecipeFoodBox/recipeFoodBox.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ffo/helpers/firebase.dart';
+import 'package:ffo/models/recipes.dart';
+import 'package:flutter/services.dart';
+import 'dart:async';
 class Recipes extends StatefulWidget {
   final List<String> ing;
     Recipes({Key key, this.title, @required this.ing}) : super(key: key);
@@ -12,6 +16,37 @@ class Recipes extends StatefulWidget {
 }
 
 class _RecipesState extends State<Recipes> {
+  List<Recipes> items;
+  FirebaseFirestoreService db = new FirebaseFirestoreService();
+  StreamSubscription<QuerySnapshot> ingredientsSub;
+    @override
+  void initState() {
+    super.initState();
+    items = new List();
+    ingredientsSub?.cancel();
+    ingredientsSub = db.getRecipesList().listen((QuerySnapshot snapshot) {
+      final List<Recipes> recs = snapshot.documents
+          .map((documentSnapshot) => Recipes.fromMap(documentSnapshot.data))
+          .toList();
+          widget.ing.forEach((item) => recs
+          .where((itemM) =>
+              itemM.ingredients.name.toString().toLowerCase().contains(item.toLowerCase()))
+          .toList();
+      setState(() {
+        this.items = recs
+          .where((item) =>
+              item.ingredients.name.toString().toLowerCase().contains(recs.ingredients.name.toLowerCase()))
+          .toList();
+        
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    ingredientsSub?.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
