@@ -44,4 +44,3 @@ class _CameraState extends State<Camera> {
         child: CameraPreview(controller));
   }
 }
-}

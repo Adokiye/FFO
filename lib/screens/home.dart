@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import '../components/Text/HeaderText/headerText.dart';
 import '../components/Button/ScanButton/scanButton.dart';
 import '../components/TextInput/SearchTextInput/searchTextInput.dart';
 import '../components/Button/YellowButton/yellowButton.dart';
 import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ffo/helpers/firebase.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -16,7 +18,32 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<String> ingredients;
-  final databaseReference = Firestore.instance;
+  FirebaseFirestoreService db = new FirebaseFirestoreService();
+  StreamSubscription<QuerySnapshot> ingredientsSub;
+
+  @override
+  void initState() {
+    super.initState();
+ 
+    items = new List();
+ 
+    ingredientsSub?.cancel();
+    ingredientsSub = db.getNoteList().listen((QuerySnapshot snapshot) {
+      final List<Note> notes = snapshot.documents
+          .map((documentSnapshot) => Note.fromMap(documentSnapshot.data))
+          .toList();
+ 
+      setState(() {
+        this.items = notes;
+      });
+    });
+  }
+ 
+  @override
+  void dispose() {
+    ingredientsSub?.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
