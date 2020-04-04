@@ -8,6 +8,7 @@ import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ffo/helpers/firebase.dart';
 import 'package:ffo/models/ingredients.dart';
+import 'package:flutter/services.dart';
 import '../components/FoodBox/AddedFoodBox/addedFoodBox.dart';
 import 'package:ffo/screens/recipes.dart';
 import 'dart:convert';
@@ -30,11 +31,28 @@ class _MyHomePageState extends State<MyHomePage> {
   final textController = TextEditingController();
 
   _setChosen(Ingredients ingredient) {
-    print(ingredient);
-    setState((){
-       chosenItems.add(ingredient);
+    print(ingredient.name);
+      var check = chosenItems.where((item) => item.name == ingredient.name).toList();
+      if(check.isEmpty){
+        setState((){
+chosenItems.add(ingredient);
     chosenNames.add(ingredient.name);
     newItems = new List();
+    textController.clear();
+    FocusScope.of(context).unfocus();
+     }); 
+      }
+  }
+  _removeChosen(index){
+    setState((){
+      if(chosenItems.isNotEmpty){
+        items.add(chosenItems[index]);
+      }
+       
+      print(items.length);
+     
+      chosenItems.removeAt(index);
+      chosenNames.removeAt(index);
     });
   }
 
@@ -62,11 +80,12 @@ class _MyHomePageState extends State<MyHomePage> {
     textController.dispose();
   }
     _textListener() {
-     // print(newItems.length);
     setState(() {
+      chosenItems.forEach((item) => items.removeWhere((itemM)=> itemM.name == item.name));
+      print(items.length);
       newItems = items
           .where((item) =>
-              item.name.toString().contains(this.textController.text))
+              item.name.toString().toLowerCase().contains(this.textController.text.toLowerCase()))
           .toList();
     });
   }
@@ -114,47 +133,68 @@ class _MyHomePageState extends State<MyHomePage> {
           decoration: inputDecoration1,
           keyboardType: TextInputType.text,
         )))),
-            textController.text != '' ?  ListView.builder(
+        textController.text == '' && chosenItems.isEmpty ?  Center(
+              child: Container(
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: ListView.builder(
+              scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    print(items[index]);
+                    return new GestureDetector(
+                      onTap: () => _setChosen(items[index]),
+                      child: AddFoodBox(
+                      text: items[index].name, 
+                    ));
+                  }))):Container(),
+            textController.text != '' ?  Center(
+              child: Container(
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: ListView.builder(
               scrollDirection: Axis.vertical,
     shrinkWrap: true,
                   itemCount: newItems.length,
                   itemBuilder: (BuildContext ctxt, int index) {
                     print(newItems[index]);
-                    return new Container(
-                      width: MediaQuery.of(context).size.width * 0.85,
+                    return new GestureDetector(
+                      onTap: () => _setChosen(newItems[index]),
                       child: AddFoodBox(
-                      text: newItems[index].name,
-                      onPressed: null, //_setChosen(newItems[index]),
+                      text: newItems[index].name, 
                     ));
-                  }):Container(),
-            chosenNames.length >0 ?  ListView.builder(
+                  }))):Container(),
+            chosenItems.isNotEmpty ?  Center(
+              child: Container(
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: ListView.builder(
               scrollDirection: Axis.vertical,
     shrinkWrap: true,
                   itemCount: chosenItems.length,
                   itemBuilder: (BuildContext ctxt, int index) {
                     return new AddedFoodBox(
-                      text: newItems[index].name,
+                      text: chosenItems[index].name,
                       imageUrl: chosenItems[index].image,
-                      onPressed: null,
+                      onPressed: () => _removeChosen(index),
                     );
-                  }):Container()
+                  }))):Container()
             ])),
+            chosenItems.isNotEmpty && textController.text == '' ?
      Positioned(
-            bottom: 40,
+            bottom: 30,
             left: MediaQuery.of(context).size.width*0.075,
-            child: Align(
-              alignment: Alignment.center,
+            child: Container(
+              margin: EdgeInsets.only(top: 20.0),
               child: YellowButton(
               text: 'COOK',
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => Recipes(ing: chosenNames, title: 'Recipes'),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Recipes(ing: chosenNames, title: 'Recipes'),
+                  ),
+                );
               },
-       )  ))
+       )  )):Container()
       ])),
         
         )

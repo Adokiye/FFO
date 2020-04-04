@@ -3,19 +3,11 @@ import 'styles.dart';
 
 class AddFoodBox extends StatelessWidget {
   final String text;
-  final Function() onPressed;
-  AddFoodBox({@required this.text, @required this.onPressed});
+  AddFoodBox({@required this.text});
 
   @override
   Widget build(BuildContext context) {
-    return new SizedBox(
-      width: MediaQuery.of(context).size.width * 0.85,
-                height: 51.0,
-      child: Material(
-        color: Colors.white,
-        child: InkWell(
-            onTap:() => onPressed,
-            child: Container(
+    return new Container(
                 width: MediaQuery.of(context).size.width * 0.85,
                 height: 51.0,
                 decoration: boxDecorationStyle,
@@ -33,6 +25,6 @@ class AddFoodBox extends StatelessWidget {
                           '+',
                           style: plusStyle),
                       ],
-                    ))))));
+                    )));
   }
 }
