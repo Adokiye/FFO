@@ -3,7 +3,8 @@ import '../components/Text/HeaderText/headerText.dart';
 import '../components/FoodBox/RecipeFoodBox/recipeFoodBox.dart';
 
 class Recipes extends StatefulWidget {
-  Recipes({Key key, this.title}) : super(key: key);
+  final List<String> ing;
+    Recipes({Key key, this.title, @required this.ing}) : super(key: key);
   final String title;
 
   @override

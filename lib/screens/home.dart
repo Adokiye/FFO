@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ffo/helpers/firebase.dart';
 import 'package:ffo/models/ingredients.dart';
 import '../components/FoodBox/AddedFoodBox/addedFoodBox.dart';
+import 'package:ffo/screens/recipes.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -22,6 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Ingredients> items;
   List<Ingredients> newItems;
   List<Ingredients> chosenItems;
+  List<String> chosenNames;
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
   TextEditingController textController;
@@ -37,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _setChosen(Ingredients ingredient) {
     this.chosenItems.add(ingredient);
+    this.chosenNames.add(ingredient.name);
     this.newItems = new List();
   }
 
@@ -87,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: null,
                   )),
               SearchTextInput(
-                textController: this.textController,
+                textController: textController,
               ),
               // AddFoodBox(
               //   text: 'Tomato',
@@ -115,12 +118,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   })
             ]))),
-        Positioned(
+     chosenNames.length > 0 ?   Positioned(
             bottom: 40,
             child: YellowButton(
               text: 'COOK',
-              onPressed: (){Navigator.pushNamed(context, '/recipes');},
-            ))
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Recipes(ing: chosenNames, title: 'Recipes'),
+                  ),
+                );
+              },
+            )) : null
       ])),
     );
   }
