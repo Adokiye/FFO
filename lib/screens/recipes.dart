@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/Text/HeaderText/headerText.dart';
-import '../components/Button/ScanButton/scanButton.dart';
-import '../components/TextInput/SearchTextInput/searchTextInput.dart';
-import '../components/Button/YellowButton/yellowButton.dart';
-import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
+import '../components/FoodBox/RecipeFoodBox/recipeFoodBox.dart';
 
 class Recipes extends StatefulWidget {
   Recipes({Key key, this.title}) : super(key: key);
@@ -34,7 +31,15 @@ class _RecipesState extends State<Recipes> {
                           color: const Color(0xffEF383F),
                           size: 20.0,
                         ))),
-            ),])
+            ),
+            HeaderText(text: 'Recipes Found',),
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  
+                ],),
+            )
+            ])
           ),),
     );
   }
