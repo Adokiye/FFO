@@ -19,26 +19,23 @@ class _RecipesState extends State<Recipes> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: SingleChildScrollView(
-            child: Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-              HeaderText(
-                text: 'Add your ingredients',
-              ),
-              HeaderText(
-                text: 'Find your perfect recipe. ',
-              ),
-              Container(
-                  margin: EdgeInsets.symmetric(vertical: 36.0),
-                  child: ScanButton(
-                    onPressed: null,
-                  )),
-              SearchTextInput(),
-              AddFoodBox(text: 'Tomato',onPressed: null,),
-              AddFoodBox(text: 'Tomato Paste',onPressed: null,)
-            ]))),),
+          child: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:<Widget>[
+                Container(
+              width: MediaQuery.of(context).size.width * 0.85,
+              margin: EdgeInsets.symmetric(vertical: 16.0),
+              child: Material(
+                    child: InkWell(
+                        onTap: null,
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: const Color(0xffEF383F),
+                          size: 20.0,
+                        ))),
+            ),])
+          ),),
     );
   }
 }
