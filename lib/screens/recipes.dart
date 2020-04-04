@@ -25,7 +25,7 @@ class _RecipesState extends State<Recipes> {
               margin: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
                     child: InkWell(
-                        onTap: null,
+                        onTap: () => Navigator.pop(context),
                         child: Icon(
                           Icons.arrow_back_ios,
                           color: const Color(0xffEF383F),
@@ -38,8 +38,8 @@ class _RecipesState extends State<Recipes> {
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  RecipeFoodBox(text: 'Jollof Rice', onPressed: null, time: '20mins',),
-                  RecipeFoodBox(text: 'Fried Rice', onPressed: null, time: '20mins',)
+                  // RecipeFoodBox(text: 'Jollof Rice', onPressed: null, time: '20mins',imageUrl: '',),
+                  // RecipeFoodBox(text: 'Fried Rice', onPressed: null, time: '20mins',imageUrl: '',)
                 ],),
             )
             ]
