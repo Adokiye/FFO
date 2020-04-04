@@ -1,4 +1,4 @@
-package com.example.ffo
+package com.comptware.ffo
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

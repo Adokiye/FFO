@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "122847702375",
+    "firebase_url": "https://for-food-only.firebaseio.com",
+    "project_id": "for-food-only",
+    "storage_bucket": "for-food-only.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122847702375:android:b648468aaed2481d3353c2",
+        "android_client_info": {
+          "package_name": "com.comptware.ffo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122847702375-sln6kbl8o3hc8hl6bavac1v61pddd75g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzTL3jpkVH_Ufn7iOqZCx9SC3iQrV-BUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122847702375-sln6kbl8o3hc8hl6bavac1v61pddd75g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

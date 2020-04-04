@@ -4,6 +4,7 @@ import '../components/Button/ScanButton/scanButton.dart';
 import '../components/TextInput/SearchTextInput/searchTextInput.dart';
 import '../components/Button/YellowButton/yellowButton.dart';
 import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -14,6 +15,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<String> ingredients;
+  final databaseReference = Firestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,5 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ))
       ])),
     );
+  }
+    void getData() {
+    databaseReference
+        .collection("ingredients")
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) => print('${f.data}}'));
+    });
   }
 }
