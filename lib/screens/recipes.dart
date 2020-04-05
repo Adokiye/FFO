@@ -71,10 +71,7 @@ class _RecipesState extends State<Recipes> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: isRecipe ? Column(
+        child: isRecipe ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
           //  mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -99,13 +96,11 @@ class _RecipesState extends State<Recipes> {
                     text: 'Recipes Found',
                   )),
            items.isNotEmpty ? Expanded(
-                child:  Center(
-                  child: Container(
-                        width: MediaQuery.of(context).size.width * 0.85,
-                        
-                        child:ListView.builder(
+           //  constraints: BoxConstraints.expand(),
+             child: Center(
+                child:ListView.builder(
               scrollDirection: Axis.vertical,
-    shrinkWrap: true,
+  //  shrinkWrap: true,
                   itemCount: items.length,
                   itemBuilder: (BuildContext ctxt, int index) {
                  //   print(items[index]);
@@ -125,11 +120,11 @@ class _RecipesState extends State<Recipes> {
                       time: '20mins',
                       imageUrl: items[index].image,
                       ));
-                  })))):Container(),
+                  }))):Container(),
                   ],
                 ) : NotFound(header: 'No Recipes Found', subText: 'Try choosing other ingredients',),
               )
-              )
+              
             );
   }
 }

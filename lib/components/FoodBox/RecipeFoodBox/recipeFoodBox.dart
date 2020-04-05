@@ -15,7 +15,9 @@ class RecipeFoodBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return new Align(
+        alignment: Alignment.center,
+        child:Container(
         width: MediaQuery.of(context).size.width * 0.85,
         height: 100.0,
            decoration: boxDecorationStyle,
@@ -78,6 +80,6 @@ class RecipeFoodBox extends StatelessWidget {
              ) )
           ],
         ),
-      );
+     ) );
   }
 }
