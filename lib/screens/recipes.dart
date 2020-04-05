@@ -4,6 +4,7 @@ import '../components/FoodBox/RecipeFoodBox/recipeFoodBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ffo/helpers/firebase.dart';
 import 'package:ffo/models/recipes.dart';
+import 'package:ffo/screens/recipeDetails.dart';
 import 'package:collection/collection.dart';
 import 'package:ffo/models/ingredients.dart';
 import 'package:flutter/services.dart';
@@ -100,7 +101,14 @@ class _RecipesState extends State<Recipes> {
                   itemBuilder: (BuildContext ctxt, int index) {
                  //   print(items[index]);
                     return new GestureDetector(
-                      onTap: null,
+                      onTap: (){
+                         Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RecipeDetails(data: items[index]),
+                  ),
+                );
+                      },
                       child:  RecipeFoodBox(
                       text: items[index].name,
                       onPressed: null,

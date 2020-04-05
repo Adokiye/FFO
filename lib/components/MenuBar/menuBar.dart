@@ -32,13 +32,12 @@ class _MenuBarState extends State<MenuBar> {
       height: 51.0,
       margin: EdgeInsets.only(top: 21.0),
       decoration: parentDecorationStyle,
-      child: Expanded(
-        child: Row(
+      child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Spacer(),
             Material(
-              child: InkWell(onTap: _setItem(true),
+              child: InkWell(onTap: (){_setItem(true);},
               child: Container(
               width: MediaQuery.of(context).size.width*0.38,
               decoration: ingredientsItem?pressedDecorationStyle:unpressedDecorationStyle,
@@ -47,7 +46,7 @@ class _MenuBarState extends State<MenuBar> {
             ),
                          Spacer(),
             Material(
-              child: InkWell(onTap: _setItem(false),
+              child: InkWell(onTap: (){_setItem(false);},
               child: Container(
               width: MediaQuery.of(context).size.width*0.38,
               decoration: !ingredientsItem?pressedDecorationStyle:unpressedDecorationStyle,
@@ -57,7 +56,7 @@ class _MenuBarState extends State<MenuBar> {
                                      Spacer(),
           ],
         ),
-      ),
+      
     );
   }
 }
