@@ -4,6 +4,8 @@ import '../components/FoodBox/RecipeFoodBox/recipeFoodBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ffo/helpers/firebase.dart';
 import 'package:ffo/models/recipes.dart';
+import 'package:collection/collection.dart';
+import 'package:ffo/models/ingredients.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 class Recipes extends StatefulWidget {
@@ -16,7 +18,7 @@ class Recipes extends StatefulWidget {
 }
 
 class _RecipesState extends State<Recipes> {
-  List<Recipes> items;
+  List<RecipesModel> items;
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
     @override
@@ -25,20 +27,14 @@ class _RecipesState extends State<Recipes> {
     items = new List();
     ingredientsSub?.cancel();
     ingredientsSub = db.getRecipesList().listen((QuerySnapshot snapshot) {
-      final List<Recipes> recs = snapshot.documents
-          .map((documentSnapshot) => Recipes.fromMap(documentSnapshot.data))
-          .toList();
-          widget.ing.forEach((item) => recs
-          .where((itemM) =>
-              itemM.ingredients.name.toString().toLowerCase().contains(item.toLowerCase()))
+      final List<RecipesModel> recs = snapshot.documents
+          .map((documentSnapshot) => RecipesModel.fromMap(documentSnapshot.data))
           .toList();
       setState(() {
-        this.items = recs
-          .where((item) =>
-              item.ingredients.name.toString().toLowerCase().contains(recs.ingredients.name.toLowerCase()))
-          .toList();
-        
+        this.items = recs.where((item) => widget.ing.toString().toLowerCase()
+        .contains(item.ingredients.name.toString().toLowerCase()));
       });
+      print("just $items.length");
     });
   }
 
