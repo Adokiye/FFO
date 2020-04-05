@@ -133,7 +133,7 @@ chosenItems.add(ingredient);
           decoration: inputDecoration1,
           keyboardType: TextInputType.text,
         )))),
-        textController.text == '' && chosenItems.isEmpty ?  Center(
+        textController.text == '' && chosenItems.isEmpty && items.isNotEmpty ?  Center(
               child: Container(
               width: MediaQuery.of(context).size.width * 0.85,
               child: ListView.builder(
@@ -141,7 +141,7 @@ chosenItems.add(ingredient);
     shrinkWrap: true,
                   itemCount: 5,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    print(items[index]);
+                 //   print(items[index]);
                     return new GestureDetector(
                       onTap: () => _setChosen(items[index]),
                       child: AddFoodBox(

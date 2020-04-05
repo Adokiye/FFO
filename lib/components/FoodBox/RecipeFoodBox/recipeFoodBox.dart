@@ -20,14 +20,14 @@ class RecipeFoodBox extends StatelessWidget {
         height: 100.0,
            decoration: boxDecorationStyle,
         padding: EdgeInsets.symmetric(horizontal: 10.0),
-        margin: EdgeInsets.only(top: 25.0),
+        margin: EdgeInsets.symmetric(vertical: 12.5),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             imageUrl != ''
                 ?  Container(
                     margin: EdgeInsets.only(right: 10.0),
-                    height: 80.0,
+                    height: 90.0,
                     width: 80.0,
                     decoration: imageDecorationStyle,
                     child: FadeInImage.memoryNetwork(
@@ -37,12 +37,14 @@ class RecipeFoodBox extends StatelessWidget {
                 : Container(),
             Expanded
             (child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: imageUrl != '' ? CrossAxisAlignment.start:CrossAxisAlignment.center,
               children: <Widget>[
                 Spacer(),
                 Text(text, style: foodNameStyle),
                 Spacer(),
                 Row(children: <Widget>[
+                  imageUrl == '' ? Spacer() : Container(),
                   Container(
                       margin: EdgeInsets.only(right: 10),
                       child: Text(
@@ -63,13 +65,15 @@ class RecipeFoodBox extends StatelessWidget {
                         style: subTextStyle,
                       )),
                   Image.asset(
-                    'assets/images/clock.png',
+                    'assets/images/next.png',
                     height: 18,
                     width: 18,
                     fit: BoxFit.contain,
                   ),
                   Spacer(),
-                ])
+                ]),
+                Spacer(),
+             
               ],
              ) )
           ],

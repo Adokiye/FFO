@@ -8,9 +8,10 @@ import 'package:collection/collection.dart';
 import 'package:ffo/models/ingredients.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
+
 class Recipes extends StatefulWidget {
   final List<String> ing;
-    Recipes({Key key, this.title, @required this.ing}) : super(key: key);
+  Recipes({Key key, this.title, @required this.ing}) : super(key: key);
   final String title;
 
   @override
@@ -21,20 +22,32 @@ class _RecipesState extends State<Recipes> {
   List<RecipesModel> items;
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
-    @override
+  @override
   void initState() {
     super.initState();
     items = new List();
     ingredientsSub?.cancel();
     ingredientsSub = db.getRecipesList().listen((QuerySnapshot snapshot) {
       final List<RecipesModel> recs = snapshot.documents
-          .map((documentSnapshot) => RecipesModel.fromMap(documentSnapshot.data))
+          .map(
+              (documentSnapshot) => RecipesModel.fromMap(documentSnapshot.data))
           .toList();
-      setState(() {
-        this.items = recs.where((item) => widget.ing.toString().toLowerCase()
-        .contains(item.ingredients.name.toString().toLowerCase()));
-      });
-      print("just $items.length");
+      outLoop:
+      for (var i = 0; i < (recs.length); i++) {
+        inLoop:
+        for (var j = 0; j < (recs[i].ingredients.length); j++) {
+          if (widget.ing
+              .toString()
+              .toLowerCase()
+              .contains(recs[i].ingredients[j].name.toString().toLowerCase())) {
+            setState(() {
+              this.items.add(recs[i]);
+            });
+            continue outLoop;
+          }
+        }
+      }
+      print(this.items.length);
     });
   }
 
@@ -43,18 +56,24 @@ class _RecipesState extends State<Recipes> {
     ingredientsSub?.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:<Widget>[
-                Container(
-              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075),
-              margin: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
+            crossAxisAlignment: CrossAxisAlignment.start,
+          //  mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.075),
+                margin: EdgeInsets.symmetric(vertical: 16.0),
+                child: Material(
                     child: InkWell(
                         onTap: () => Navigator.pop(context),
                         child: Icon(
@@ -62,19 +81,37 @@ class _RecipesState extends State<Recipes> {
                           color: const Color(0xffEF383F),
                           size: 24.0,
                         ))),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075),
-            child: HeaderText(text: 'Recipes Found',)),
-            SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Center(
-                    child: RecipeFoodBox(text: 'Jollof Rice', onPressed: null, time: '20mins',imageUrl: '',)
-              )],),
-            )
-            ]
-          ),),
-    );
+              ),
+              Container(
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.075),
+                      margin: EdgeInsets.only(bottom: 15.0),
+                  child: HeaderText(
+                    text: 'Recipes Found',
+                  )),
+           items.isNotEmpty ? Expanded(
+                child:  Center(
+                  child: Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child:ListView.builder(
+              scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                 //   print(items[index]);
+                    return new GestureDetector(
+                      onTap: null,
+                      child:  RecipeFoodBox(
+                      text: items[index].name,
+                      onPressed: null,
+                      time: '20mins',
+                      imageUrl: items[index].image,
+                      ));
+                  })))):Container(),
+                  ],
+                ),
+              )
+              )
+            );
   }
 }
