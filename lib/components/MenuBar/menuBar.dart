@@ -37,8 +37,11 @@ class _MenuBarState extends State<MenuBar> {
           children: <Widget>[
             Spacer(),
             Material(
+              borderRadius: BorderRadius.circular(5.0),
+              color: ingredientsItem?const Color(0xffE64C3C):const Color(0xfffafafb),
               child: InkWell(onTap: (){_setItem(true);},
               child: Container(
+                height: 40.0,
               width: MediaQuery.of(context).size.width*0.38,
               decoration: ingredientsItem?pressedDecorationStyle:unpressedDecorationStyle,
               child: Center(child: Text('Ingredients', style: ingredientsItem?pressedTextStyle:unpressedTextStyle)),)
@@ -46,8 +49,11 @@ class _MenuBarState extends State<MenuBar> {
             ),
                          Spacer(),
             Material(
+              borderRadius: BorderRadius.circular(5.0),
+              color: !ingredientsItem?const Color(0xffE64C3C):const Color(0xfffafafb),
               child: InkWell(onTap: (){_setItem(false);},
               child: Container(
+                height: 40.0,
               width: MediaQuery.of(context).size.width*0.38,
               decoration: !ingredientsItem?pressedDecorationStyle:unpressedDecorationStyle,
               child: Center(child: Text('Recipe', style: !ingredientsItem?pressedTextStyle:unpressedTextStyle)),)

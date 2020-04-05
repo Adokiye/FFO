@@ -15,12 +15,12 @@ BoxDecoration parentDecorationStyle = BoxDecoration(
     color: const Color(0xfffafafb));
 
 BoxDecoration unpressedDecorationStyle = BoxDecoration(
-  color: const Color(0xfffafafb),
+ // color: const Color(0xfffafafb),
 );
 
 BoxDecoration pressedDecorationStyle = BoxDecoration(
-    color: const Color(0xffE64C3C),
-    borderRadius: BorderRadius.circular(5.0),
+  //  color: const Color(0xffE64C3C),
+   // borderRadius: BorderRadius.circular(5.0),
     boxShadow: [
       BoxShadow(
           color: Color.fromRGBO(0, 0, 0, 0.15),

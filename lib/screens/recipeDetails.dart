@@ -32,7 +32,9 @@ class _RecipeDetailsState extends State<RecipeDetails> {
 }
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
+        type: MaterialType.transparency,
+        child: Container(
         height: MediaQuery.of(context).size.height,
         color: Colors.white,
         child: SingleChildScrollView(
@@ -41,9 +43,9 @@ class _RecipeDetailsState extends State<RecipeDetails> {
         HeaderFoodBox(text: widget.data.name, imageUrl: widget.data.image, onBack: null),
        MenuBar(recipe: _recipe, ingredients: _ingredients,),
         recipe ? RecipeText(text: widget.data.steps)
-          : RecipeText(text: 'd')   
+          : RecipeText(text: widget.data.ingredients.map((item)=> item.name.toString().trim()+'\n').join(""))   
          ],),
           )
-    );
+     ) );
   }
 }
