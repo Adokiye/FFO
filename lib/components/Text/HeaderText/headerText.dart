@@ -8,7 +8,7 @@ class HeaderText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-        width: MediaQuery.of(context).size.width * 0.85,
+      //  width: MediaQuery.of(context).size.width * 0.85,
         child: new Text(text, style: headerStyle));
   }
 }

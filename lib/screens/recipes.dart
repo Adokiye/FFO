@@ -8,6 +8,7 @@ import 'package:ffo/screens/recipeDetails.dart';
 import 'package:collection/collection.dart';
 import 'package:ffo/models/ingredients.dart';
 import 'package:flutter/services.dart';
+import 'package:ffo/screens/notFound.dart';
 import 'dart:async';
 
 class Recipes extends StatefulWidget {
@@ -23,6 +24,7 @@ class _RecipesState extends State<Recipes> {
   List<RecipesModel> items;
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
+  bool isRecipe = true;
   @override
   void initState() {
     super.initState();
@@ -33,6 +35,7 @@ class _RecipesState extends State<Recipes> {
           .map(
               (documentSnapshot) => RecipesModel.fromMap(documentSnapshot.data))
           .toList();
+          this.items.clear();
       outLoop:
       for (var i = 0; i < (recs.length); i++) {
         inLoop:
@@ -47,6 +50,11 @@ class _RecipesState extends State<Recipes> {
             continue outLoop;
           }
         }
+      }
+      if(this.items.isEmpty){
+        setState(() {
+         isRecipe = false; 
+        });
       }
       print(this.items.length);
     });
@@ -66,7 +74,7 @@ class _RecipesState extends State<Recipes> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: Column(
+          child: isRecipe ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
           //  mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -94,10 +102,11 @@ class _RecipesState extends State<Recipes> {
                 child:  Center(
                   child: Container(
                         width: MediaQuery.of(context).size.width * 0.85,
+                        
                         child:ListView.builder(
               scrollDirection: Axis.vertical,
     shrinkWrap: true,
-                  itemCount: 5,
+                  itemCount: items.length,
                   itemBuilder: (BuildContext ctxt, int index) {
                  //   print(items[index]);
                     return new GestureDetector(
@@ -109,6 +118,7 @@ class _RecipesState extends State<Recipes> {
                   ),
                 );
                       },
+                      
                       child:  RecipeFoodBox(
                       text: items[index].name,
                       onPressed: null,
@@ -117,7 +127,7 @@ class _RecipesState extends State<Recipes> {
                       ));
                   })))):Container(),
                   ],
-                ),
+                ) : NotFound(header: 'No Recipes Found', subText: 'Try choosing other ingredients',),
               )
               )
             );

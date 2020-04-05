@@ -105,14 +105,17 @@ chosenItems.add(ingredient);
                     crossAxisAlignment: CrossAxisAlignment.start,
                     
                     children: <Widget>[
-                      Center(child: Container(
+                      Container(
                         margin: EdgeInsets.symmetric(vertical: 10.0),
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075) ,
                         child: HeaderText(
                 text: 'Add your ingredients',
-              ),)),
-              Center(child: HeaderText(
-                text: 'Find your perfect recipe. ',
               ),),
+                       Container(
+                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075) ,
+                child: HeaderText(
+                text: 'Find your perfect recipe. ',
+          )   ),
               Container(
                 padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075) ,
                 margin: EdgeInsets.symmetric(vertical: 18.0),

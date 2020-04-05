@@ -20,23 +20,27 @@ class _NotFoundState extends State<NotFound> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children:<Widget>[
-                CancelHeader(onPressed: null,),
+                CancelHeader(),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      HeaderText(text: widget.header,),
-                      LightText(text: widget.subText)
+                         Center(
+                           child: HeaderText(text: widget.header,)),
+                      Center(
+                        child: LightText(text: widget.subText))
+                      
+                      
                     ],
                   )
                 )
             ])
-          ),),
+          ),
     );
   }
 }
