@@ -23,9 +23,8 @@
     <item>
         <bitmap android:gravity="center" android:src="@drawable/splash" />
     </item>
- <item>
+ <item android:gravity="bottom|right">
         <bitmap
-            android:gravity="bottom|right"
             android:src="@drawable/bottom_launcher" 
             />
     </item>

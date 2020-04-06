@@ -43,14 +43,14 @@ class RecipeFoodBox extends StatelessWidget {
               crossAxisAlignment: imageUrl != '' ? CrossAxisAlignment.start:CrossAxisAlignment.center,
               children: <Widget>[
                 Spacer(),
-                Text(text, style: foodNameStyle),
+                Text(text, style: foodNameStyle, textAlign: imageUrl == '' ?TextAlign.center:TextAlign.left,),
                 Spacer(),
                 Row(children: <Widget>[
                   imageUrl == '' ? Spacer() : Container(),
                   Container(
-                      margin: EdgeInsets.only(right: 10),
+                  //    margin: EdgeInsets.only(right: 2),
                       child: Text(
-                        time,
+                        ' '+time,
                         style: subTextStyle,
                       )),
                   Image.asset(
@@ -61,9 +61,9 @@ class RecipeFoodBox extends StatelessWidget {
                   ),
                   Spacer(),
                   Container(
-                      margin: EdgeInsets.only(right: 10),
+                    //  margin: EdgeInsets.only(right: 2),
                       child: Text(
-                        'View Details',
+                        ' View Details',
                         style: subTextStyle,
                       )),
                   Image.asset(

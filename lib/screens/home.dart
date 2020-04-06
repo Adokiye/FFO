@@ -119,7 +119,7 @@ chosenItems.add(ingredient);
                        Container(
                 padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075) ,
                 child: HeaderText(
-                text: 'Find your perfect recipe. ' +'😉',
+                text: 'Find your perfect recipe. ' +'??',
           )   ),
               Container(
                 padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075) ,
