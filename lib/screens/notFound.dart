@@ -33,8 +33,9 @@ class _NotFoundState extends State<NotFound> {
                          Center(
                            child: HeaderText(text: widget.header,)),
                       Center(
-                        child: LightText(text: widget.subText))
-                      
+                        child: LightText(text: widget.subText)),
+                      Center(
+                        child: HeaderText(text: '☹️'))
                       
                     ],
                   )

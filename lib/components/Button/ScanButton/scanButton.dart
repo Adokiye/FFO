@@ -8,7 +8,7 @@ class ScanButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      constraints: BoxConstraints.tight(Size(121, 37)),
+     // constraints: BoxConstraints.tight(Size(121, 37)),
       fillColor: const Color(0xffEF383F),
       elevation: 3.0,
       shape: RoundedRectangleBorder(

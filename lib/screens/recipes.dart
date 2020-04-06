@@ -7,6 +7,7 @@ import 'package:ffo/models/recipes.dart';
 import 'package:ffo/screens/recipeDetails.dart';
 import 'package:collection/collection.dart';
 import 'package:ffo/models/ingredients.dart';
+import 'package:ffo/screens/cooking.dart';
 import 'package:flutter/services.dart';
 import 'package:ffo/screens/notFound.dart';
 import 'dart:async';
@@ -24,10 +25,12 @@ class _RecipesState extends State<Recipes> {
   List<RecipesModel> items;
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
-  bool isRecipe = true;
+  bool isRecipe = false;
+  bool cooking = true;
   @override
   void initState() {
     super.initState();
+   
     items = new List();
     ingredientsSub?.cancel();
     ingredientsSub = db.getRecipesList().listen((QuerySnapshot snapshot) {
@@ -55,9 +58,15 @@ class _RecipesState extends State<Recipes> {
         setState(() {
          isRecipe = false; 
         });
+      }else{
+        setState(() {
+         isRecipe = true; 
+        });
       }
-      print(this.items.length);
     });
+     setState(() {
+         cooking = false; 
+        });
   }
 
   @override
@@ -68,10 +77,13 @@ class _RecipesState extends State<Recipes> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: isRecipe ? Column(
+    Widget child;
+    if(cooking && !isRecipe){
+      child = Cooking();
+    }else if(!cooking && !isRecipe){
+      child = NotFound(header: 'No Recipes Found', subText: 'Try choosing other ingredients',);
+    }else{
+      child = Column(
             crossAxisAlignment: CrossAxisAlignment.start,
           //  mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -122,7 +134,12 @@ class _RecipesState extends State<Recipes> {
                       ));
                   }))):Container(),
                   ],
-                ) : NotFound(header: 'No Recipes Found', subText: 'Try choosing other ingredients',),
+                );
+    }
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: child
               )
               
             );

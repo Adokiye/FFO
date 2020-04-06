@@ -1,5 +1,5 @@
 name: ffo
-description: A new Flutter project.
+description: For Food Only(Identify food ingredients and their corresponding recipes).
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -28,6 +28,8 @@ dependencies:
   cloud_firestore: ^0.11.0+2
   duration: ^2.0.0
   collection: any
+  animated_text_kit: ^2.0.0
+  flutter_native_splash: ^0.1.9
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +38,9 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+flutter_native_splash:
+  image: assets/images/mediumLogo.png
+  color: "EF383F"
 
 # The following section is specific to Flutter.
 flutter:

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 InputDecoration inputDecoration1 = InputDecoration(
-  hintText: 'Search for Ingredients',
+  hintText: 'Search and add Ingredients',
   hintStyle: hintStyle1,
   enabledBorder: OutlineInputBorder(
     borderSide: BorderSide(color: const Color(0xffDCE0E7), width: 1.0),

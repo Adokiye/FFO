@@ -114,7 +114,7 @@ chosenItems.add(ingredient);
                        Container(
                 padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075) ,
                 child: HeaderText(
-                text: 'Find your perfect recipe. ',
+                text: 'Find your perfect recipe. ' +'😉',
           )   ),
               Container(
                 padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075) ,
@@ -130,12 +130,15 @@ chosenItems.add(ingredient);
         child: Container(
           width:  MediaQuery.of(context).size.width * 0.85,
           height: 51.0,
-          child: TextField(
+          child: Material(
+              elevation: 6.5,
+              shadowColor: Colors.black,
+                          child:TextField(
             controller: textController,
             style: enteredTextStyle1,
           decoration: inputDecoration1,
           keyboardType: TextInputType.text,
-        )))),
+        ))))),
         textController.text == '' && chosenItems.isEmpty && items.isNotEmpty ?  Center(
               child: Container(
               width: MediaQuery.of(context).size.width * 0.85,
