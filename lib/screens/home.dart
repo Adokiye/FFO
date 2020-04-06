@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import '../components/FoodBox/AddedFoodBox/addedFoodBox.dart';
 import 'package:ffo/screens/recipes.dart';
 import 'dart:convert';
+import 'package:ffo/screens/cooking.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -24,6 +25,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Ingredients> items;
   List<Ingredients> newItems;
+  bool cooking = true;
   List<Ingredients> chosenItems = List<Ingredients>();
   List<String> chosenNames = List<String>();
   FirebaseFirestoreService db = new FirebaseFirestoreService();
@@ -71,6 +73,9 @@ chosenItems.add(ingredient);
       });
     });
     textController.addListener(_textListener);
+    setState(() {
+         cooking = false; 
+        });
   }
 
   @override
@@ -96,7 +101,7 @@ chosenItems.add(ingredient);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: Center(
+          child: cooking ? Cooking() : Center(
             child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
