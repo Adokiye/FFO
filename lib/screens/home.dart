@@ -13,6 +13,7 @@ import '../components/FoodBox/AddedFoodBox/addedFoodBox.dart';
 import 'package:ffo/screens/recipes.dart';
 import 'dart:convert';
 import 'package:ffo/screens/cooking.dart';
+import 'package:ffo/helpers/enterExitRoute.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -200,10 +201,10 @@ chosenItems.add(ingredient);
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => Recipes(ing: chosenNames, title: 'Recipes'),
-                  ),
-                );
+                  EnterExitRoute(exitPage: MyHomePage(title: 'FFO'), enterPage: Recipes(ing: chosenNames, title: 'Recipes')));
+                  // MaterialPageRoute(
+                  //   builder: (context) => Recipes(ing: chosenNames, title: 'Recipes'),
+                  // ),
               },
        )  )):Container()
       ])),
