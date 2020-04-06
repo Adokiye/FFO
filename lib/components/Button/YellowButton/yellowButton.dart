@@ -10,7 +10,7 @@ class YellowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       fillColor: const Color(0xffFBAE17),
-      elevation: 3.0,
+      elevation: 2.0,
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(4.0),
       ),

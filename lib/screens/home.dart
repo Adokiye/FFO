@@ -145,6 +145,14 @@ chosenItems.add(ingredient);
           decoration: inputDecoration1,
           keyboardType: TextInputType.text,
         ))))),
+        chosenItems.isEmpty && items.isEmpty ? 
+        Center(child:
+        Container(
+          margin: EdgeInsets.only(top: 10.0),
+          child:CircularProgressIndicator(
+            backgroundColor: const Color(0xffEF383F),
+            valueColor: new AlwaysStoppedAnimation<Color>(const Color(0xffFBAE17)),
+          ))):Container(),
         textController.text == '' && chosenItems.isEmpty && items.isNotEmpty ?  Center(
               child: Container(
               width: MediaQuery.of(context).size.width * 0.85,
@@ -202,9 +210,7 @@ chosenItems.add(ingredient);
                 Navigator.push(
                   context,
                   EnterExitRoute(exitPage: MyHomePage(title: 'FFO'), enterPage: Recipes(ing: chosenNames, title: 'Recipes')));
-                  // MaterialPageRoute(
-                  //   builder: (context) => Recipes(ing: chosenNames, title: 'Recipes'),
-                  // ),
+                
               },
        )  )):Container()
       ])),
