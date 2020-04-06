@@ -35,7 +35,12 @@ class _RecipesState extends State<Recipes> {
     items = new List();
     ingredientsSub?.cancel();
     ingredientsSub = db.getRecipesList().listen((QuerySnapshot snapshot) {
-      final List<RecipesModel> recs = snapshot.documents
+        if(cooking){
+          setState(() {
+         cooking = false; 
+        });
+        }
+            final List<RecipesModel> recs = snapshot.documents
           .map(
               (documentSnapshot) => RecipesModel.fromMap(documentSnapshot.data))
           .toList();
@@ -65,9 +70,7 @@ class _RecipesState extends State<Recipes> {
         });
       }
     });
-     setState(() {
-         cooking = false; 
-        });
+   
   }
 
   @override
