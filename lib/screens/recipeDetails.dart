@@ -30,6 +30,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
     recipe = false;
   });
 }
+
   @override
   Widget build(BuildContext context) {
     return Material(
