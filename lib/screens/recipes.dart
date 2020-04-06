@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:ffo/screens/notFound.dart';
 import 'dart:async';
 import 'package:ffo/helpers/enterExitRoute.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Recipes extends StatefulWidget {
   final List<String> ing;
@@ -124,11 +125,11 @@ class _RecipesState extends State<Recipes> {
                       onTap: (){
                          Navigator.push(
                   context,
-               //    EnterExitRoute(exitPage: this, enterPage: Recipes(ing: chosenNames, title: 'Recipes')));
-                  MaterialPageRoute(
-                    builder: (context) => RecipeDetails(data: items[index]),
-                  ),
-                );
+               
+                  // MaterialPageRoute(
+                  //   builder: (context) => RecipeDetails(data: items[index]),
+                  // ),
+                PageTransition(type: PageTransitionType.leftToRight, child: RecipeDetails(data: items[index])));
                       },
                       
                       child:  RecipeFoodBox(
