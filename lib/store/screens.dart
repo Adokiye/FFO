@@ -1,9 +1,16 @@
-import 'package:mobx/mobx.dart';
+// import 'package:mobx/mobx.dart';
 
-part 'screens.g.dart';
+// part 'screens.g.dart';
 
-class ScreensStore = _ScreensStore with _$ScreensStore;
+// class Screens = _ScreensBase with _$Screens;
 
-abstract class _ScreensStore with Store {
-  
-} 
+
+// abstract class _ScreensBase implements Store {
+//   @observable
+//   String name = '';
+
+//   @action
+//   _set(String value) {
+//     name = value;
+//   }
+// }
