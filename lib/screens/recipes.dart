@@ -11,6 +11,7 @@ import 'package:ffo/screens/cooking.dart';
 import 'package:flutter/services.dart';
 import 'package:ffo/screens/notFound.dart';
 import 'dart:async';
+import 'package:ffo/helpers/enterExitRoute.dart';
 
 class Recipes extends StatefulWidget {
   final List<String> ing;
@@ -120,6 +121,7 @@ class _RecipesState extends State<Recipes> {
                       onTap: (){
                          Navigator.push(
                   context,
+               //    EnterExitRoute(exitPage: this, enterPage: Recipes(ing: chosenNames, title: 'Recipes')));
                   MaterialPageRoute(
                     builder: (context) => RecipeDetails(data: items[index]),
                   ),
@@ -129,7 +131,7 @@ class _RecipesState extends State<Recipes> {
                       child:  RecipeFoodBox(
                       text: items[index].name,
                       onPressed: null,
-                      time: '20mins',
+                      time: '20mins ',
                       imageUrl: items[index].image,
                       ));
                   }))):Container(),

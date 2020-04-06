@@ -50,7 +50,7 @@ class RecipeFoodBox extends StatelessWidget {
                   Container(
                   //    margin: EdgeInsets.only(right: 2),
                       child: Text(
-                        ' '+time,
+                        time,
                         style: subTextStyle,
                       )),
                   Image.asset(
@@ -63,7 +63,7 @@ class RecipeFoodBox extends StatelessWidget {
                   Container(
                     //  margin: EdgeInsets.only(right: 2),
                       child: Text(
-                        ' View Details',
+                        'View Details ',
                         style: subTextStyle,
                       )),
                   Image.asset(
