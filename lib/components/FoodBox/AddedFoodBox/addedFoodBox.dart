@@ -23,8 +23,8 @@ class AddedFoodBox extends StatelessWidget {
                 imageUrl != '' ?
                 Container(
                     margin: EdgeInsets.only(right: 10.0),
-                    height: 30.0,
-                    width: 30.0,
+                    height: 50.0,
+                    width: 50.0,
                     child: FadeInImage.memoryNetwork(
                     placeholder: kTransparentImage,
                     image: imageUrl,

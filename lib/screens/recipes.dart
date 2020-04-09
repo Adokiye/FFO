@@ -70,7 +70,7 @@ _asyncMethod();
          isRecipe = true; 
            _scaffoldKey.currentState.showSnackBar(
   SnackBar(
-    content: Text(this.items.length.toString()+' Recipes Found '+'🙂', style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w300, )),
+    content: Text(this.items.length.toString()+' Recipe'+this.items.length>1?'s':''+  ' Found '+'🙂', style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w300, )),
     behavior: SnackBarBehavior.floating,
     backgroundColor: const Color(0xffEF383F),
     elevation: 0.0,
@@ -95,7 +95,7 @@ _asyncMethod();
   print('not connected');
   _scaffoldKey.currentState.showSnackBar(
   SnackBar(
-    content: Text('No Internet Connection'),
+    content: Text('No Internet Connection',style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w300, )),
   //  duration: Duration(seconds: 3),
   ));
 }
