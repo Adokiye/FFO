@@ -29,16 +29,8 @@ class _CookingState extends State<Cooking> {
               mainAxisAlignment: MainAxisAlignment.center,
               children:<Widget>[
                 Center(
-                  child: TypewriterAnimatedTextKit(
-                    
-//  duration: Duration(milliseconds: 2000),
-  totalRepeatCount: 100,
- // pause: Duration(milliseconds:  1000),
-  text: ["Cooking.", "Cooking..", "Cooking..."],
-  textStyle: headerStyle,
-//  pause: Duration(milliseconds: 1000),
-//  displayFullTextOnTap: true,
- // stopPauseOnTap: true
+                  child: Text("Cooking.",
+  style: headerStyle
 )),
                 Center(child: CookingIcon()),
             ]))])

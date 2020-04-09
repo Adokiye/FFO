@@ -3,6 +3,7 @@ import 'dart:async';
 import '../components/Text/HeaderText/headerText.dart';
 import '../components/Button/ScanButton/scanButton.dart';
 import '../components/TextInput/SearchTextInput/styles.dart';
+import 'dart:io';
 import '../components/Button/YellowButton/yellowButton.dart';
 import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,12 +27,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Ingredients> items;
   List<Ingredients> newItems;
-  bool cooking = true;
+  bool cooking = false;
   List<Ingredients> chosenItems = List<Ingredients>();
   List<String> chosenNames = List<String>();
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
   final textController = TextEditingController();
+    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   _setChosen(Ingredients ingredient) {
     print(ingredient.name);
@@ -74,9 +76,12 @@ chosenItems.add(ingredient);
       });
     });
     textController.addListener(_textListener);
-    setState(() {
-         cooking = false; 
-        });
+    if(this.items.isEmpty){
+      _asyncMethod();
+    }
+    // setState(() {
+    //      cooking = false; 
+    //     });
   }
 
   @override
@@ -96,11 +101,26 @@ chosenItems.add(ingredient);
     });
   }
 
-
+  _asyncMethod() async{
+                     try {
+  final result = await InternetAddress.lookup('example.com');
+  if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+    print('connected');
+  }
+} on SocketException catch (_) {
+  print('not connected');
+  _scaffoldKey.currentState.showSnackBar(
+  SnackBar(
+    content: Text('No Internet Connection', style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w300, )),
+   // duration: Duration(seconds: 3),
+  ));
+}
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      key: _scaffoldKey,
       body: SafeArea(
           child: cooking ? Cooking() : Center(
             child: Container(
@@ -148,7 +168,7 @@ chosenItems.add(ingredient);
         chosenItems.isEmpty && items.isEmpty ? 
         Center(child:
         Container(
-          margin: EdgeInsets.only(top: 10.0),
+          margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
           child:CircularProgressIndicator(
             backgroundColor: const Color(0xffEF383F),
             valueColor: new AlwaysStoppedAnimation<Color>(const Color(0xffFBAE17)),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/Text/HeaderText/headerText.dart';
 import '../components/FoodBox/RecipeFoodBox/recipeFoodBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
 import 'package:ffo/helpers/firebase.dart';
 import 'package:ffo/models/recipes.dart';
 import 'package:ffo/screens/recipeDetails.dart';
@@ -29,6 +30,7 @@ class _RecipesState extends State<Recipes> {
   StreamSubscription<QuerySnapshot> ingredientsSub;
   bool isRecipe = false;
   bool cooking = true;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -36,11 +38,7 @@ class _RecipesState extends State<Recipes> {
     items = new List();
     ingredientsSub?.cancel();
     ingredientsSub = db.getRecipesList().listen((QuerySnapshot snapshot) {
-        if(cooking){
-          setState(() {
-         cooking = false; 
-        });
-        }
+       
             final List<RecipesModel> recs = snapshot.documents
           .map(
               (documentSnapshot) => RecipesModel.fromMap(documentSnapshot.data))
@@ -62,18 +60,46 @@ class _RecipesState extends State<Recipes> {
         }
       }
       if(this.items.isEmpty){
+_asyncMethod();
         setState(() {
          isRecipe = false; 
+
         });
       }else{
         setState(() {
          isRecipe = true; 
+           _scaffoldKey.currentState.showSnackBar(
+  SnackBar(
+    content: Text(this.items.length.toString()+' Recipes Found '+'🙂', style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w300, )),
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: const Color(0xffEF383F),
+    elevation: 0.0,
+  //  duration: Duration(seconds: 3),
+  ));
+         cooking = false;
         });
       }
-    });
+    }); 
    
   }
-
+  _asyncMethod() async{
+                     try {
+  final result = await InternetAddress.lookup('example.com');
+  if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+     setState(() {
+         cooking = false;
+        });
+    print('connected');
+  }
+} on SocketException catch (_) {
+  print('not connected');
+  _scaffoldKey.currentState.showSnackBar(
+  SnackBar(
+    content: Text('No Internet Connection'),
+  //  duration: Duration(seconds: 3),
+  ));
+}
+  }
   @override
   void dispose() {
     ingredientsSub?.cancel();
@@ -129,7 +155,7 @@ class _RecipesState extends State<Recipes> {
                   // MaterialPageRoute(
                   //   builder: (context) => RecipeDetails(data: items[index]),
                   // ),
-                PageTransition(type: PageTransitionType.leftToRight, child: RecipeDetails(data: items[index])));
+                PageTransition(type: PageTransitionType.rightToLeft, child: RecipeDetails(data: items[index])));
                       },
                       
                       child:  RecipeFoodBox(
@@ -144,6 +170,7 @@ class _RecipesState extends State<Recipes> {
     }
     return Scaffold(
       backgroundColor: Colors.white,
+      key: _scaffoldKey,
       body: SafeArea(
         child: child
               )
