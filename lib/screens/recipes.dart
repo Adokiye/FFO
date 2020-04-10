@@ -155,13 +155,8 @@ _asyncMethod();
                       onTap: (){
                          Navigator.push(
                   context,
-               
-                  // MaterialPageRoute(
-                  //   builder: (context) => RecipeDetails(data: items[index]),
-                  // ),
                 PageTransition(type: PageTransitionType.rightToLeft, child: RecipeDetails(data: items[index])));
                       },
-                      
                       child:  RecipeFoodBox(
                       text: items[index].name,
                       onPressed: null,

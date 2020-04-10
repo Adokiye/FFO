@@ -12,9 +12,10 @@ import 'package:ffo/models/ingredients.dart';
 import 'package:flutter/services.dart';
 import '../components/FoodBox/AddedFoodBox/addedFoodBox.dart';
 import 'package:ffo/screens/recipes.dart';
-import 'dart:convert';
+import 'package:ffo/screens/camera.dart';
 import 'package:ffo/screens/cooking.dart';
 import 'package:ffo/helpers/enterExitRoute.dart';
+import 'package:page_transition/page_transition.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -53,9 +54,7 @@ chosenItems.add(ingredient);
       if(chosenItems.isNotEmpty){
      //   items.add(chosenItems[index]);
       }
-       
       print(items.length);
-     
       chosenItems.removeAt(index);
       chosenNames.removeAt(index);
     });
@@ -79,9 +78,6 @@ chosenItems.add(ingredient);
     if(this.items.isEmpty){
       _asyncMethod();
     }
-    // setState(() {
-    //      cooking = false; 
-    //     });
   }
 
   @override
@@ -92,7 +88,7 @@ chosenItems.add(ingredient);
   }
     _textListener() {
     setState(() {
-      chosenItems.forEach((item) => items.removeWhere((itemM)=> itemM.name == item.name));
+     // chosenItems.forEach((item) => items.removeWhere((itemM)=> itemM.name == item.name));
       print(items.length);
       newItems = items
           .where((item) =>
@@ -146,7 +142,11 @@ chosenItems.add(ingredient);
                 padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.075) ,
                 margin: EdgeInsets.symmetric(vertical: 18.0),
               child: ScanButton(
-                    onPressed: null,
+                    onPressed: (){
+                         Navigator.push(
+                  context,
+                PageTransition(type: PageTransitionType.rightToLeft, child: RecipeDetails(data: items[index])));
+                      },
                   ))
               ,
               Center(
