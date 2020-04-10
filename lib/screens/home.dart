@@ -144,7 +144,7 @@ chosenItems.add(ingredient);
                     onPressed: (){
                          Navigator.push(
                   context,
-                PageTransition(type: PageTransitionType.rightToLeft, child: RecipeDetails(data: items[index])));
+                PageTransition(type: PageTransitionType.rightToLeft, child: Camera()));
                       },
                   ))
               ,
