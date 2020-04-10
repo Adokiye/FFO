@@ -125,7 +125,6 @@ chosenItems.add(ingredient);
             child: Stack(children: <Widget>[SingleChildScrollView(
             child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.symmetric(vertical: 10.0),
