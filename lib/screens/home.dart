@@ -40,8 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
     print(ingredient.name);
       var check = chosenItems.where((item) => item.name == ingredient.name).toList();
       if(check.isEmpty){
+      items.removeWhere((itemM)=> itemM.name == ingredient.name);
         setState((){
-chosenItems.add(ingredient);
+    chosenItems.add(ingredient);
     chosenNames.add(ingredient.name);
     newItems = new List();
     textController.clear();
@@ -88,7 +89,7 @@ chosenItems.add(ingredient);
   }
     _textListener() {
     setState(() {
-     // chosenItems.forEach((item) => items.removeWhere((itemM)=> itemM.name == item.name));
+      //chosenItems.forEach((item) => items.removeWhere((itemM)=> itemM.name == item.name));
       print(items.length);
       newItems = items
           .where((item) =>
