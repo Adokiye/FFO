@@ -28,6 +28,7 @@ class AddedFoodBox extends StatelessWidget {
                     child: FadeInImage.memoryNetwork(
                     placeholder: kTransparentImage,
                     image: imageUrl,
+                    fit: BoxFit.cover,
                   )): Container(),
                 Text(
                   text,
