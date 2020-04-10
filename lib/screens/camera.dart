@@ -47,7 +47,10 @@ class _CameraState extends State<Camera> {
           aspectRatio: controller.value.aspectRatio,
           child: new CameraPreview(controller)),
     ),
-    new Positioned.fill(
+    new Positioned(
+      bottom: 10.0,
+      width: 40.0,
+      height: 40.0,
       child: new Opacity(
         opacity: 0.3,
         child: new Image.network(
