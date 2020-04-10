@@ -39,8 +39,24 @@ class _CameraState extends State<Camera> {
     if (!isReady && !controller.value.isInitialized) {
       return Container();
     }
-    return AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: CameraPreview(controller));
+    return new Stack(
+  alignment: FractionalOffset.center,
+  children: <Widget>[
+    new Positioned.fill(
+      child: new AspectRatio(
+          aspectRatio: controller.value.aspectRatio,
+          child: new CameraPreview(controller)),
+    ),
+    new Positioned.fill(
+      child: new Opacity(
+        opacity: 0.3,
+        child: new Image.network(
+          'https://picsum.photos/3000/4000',
+          fit: BoxFit.fill,
+        ),
+      ),
+    ),
+  ],
+);
   }
 }

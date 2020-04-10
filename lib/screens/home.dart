@@ -40,10 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
     print(ingredient.name);
       var check = chosenItems.where((item) => item.name == ingredient.name).toList();
       if(check.isEmpty){
-      items.removeWhere((itemM)=> itemM.name == ingredient.name);
         setState((){
     chosenItems.add(ingredient);
     chosenNames.add(ingredient.name);
+    items.removeWhere((itemM) => itemM.name == ingredient.name);
     newItems = new List();
     textController.clear();
     FocusScope.of(context).unfocus();
