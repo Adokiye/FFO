@@ -51,7 +51,7 @@ chosenItems.add(ingredient);
   _removeChosen(index){
     setState((){
       if(chosenItems.isNotEmpty){
-        items.add(chosenItems[index]);
+     //   items.add(chosenItems[index]);
       }
        
       print(items.length);

@@ -34,7 +34,7 @@ class _CookingIconState extends State<CookingIcon> {
       child: AnimatedAlign(
           alignment: _alignment,
           curve: Curves.linear,
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 1),
           onEnd: _changeAlignment,
           child: Container(
             width: 45.0,
