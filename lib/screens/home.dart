@@ -180,7 +180,6 @@ chosenItems.add(ingredient);
     shrinkWrap: true,
                   itemCount: 5,
                   itemBuilder: (BuildContext ctxt, int index) {
-                 //   print(items[index]);
                     return new GestureDetector(
                       onTap: () => _setChosen(items[index]),
                       child: AddFoodBox(
