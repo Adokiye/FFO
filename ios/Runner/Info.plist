@@ -44,9 +44,8 @@
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Enable myApp to access your camera to capture your photo</string>
+	<string>Enable FFO to access your camera to capture your photo</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Enable myApp to access mic to record your voice</string>
-
+	<string>Enable FFO to access mic to record your voice</string>
 </dict>
 </plist>
