@@ -17,7 +17,8 @@ class _CameraState extends State<Camera> {
   bool isReady = false;
   Future<void> _initializeControllerFuture;
   bool showCapturedPhoto = false;
-  var imagePath;
+    bool hideModal = false;
+    var imagePath;
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class _CameraState extends State<Camera> {
       cameras = await availableCameras();
       controller = new CameraController(cameras[0], ResolutionPreset.high);
       _initializeControllerFuture = controller.initialize();
+      print("test true");
     } on CameraException catch (_) {
       setState(() {
         isReady = false;
@@ -66,9 +68,11 @@ class _CameraState extends State<Camera> {
           : null; //on pause camera is disposed, so we need to call again "issue is only for android"
     }
   }
-
-  showCustomDialogWithImage(BuildContext context) {
-    Dialog dialogWithImage = Dialog(
+ showTips(context){
+ return showDialog(
+  context: context, 
+  builder: (BuildContext context) {
+    return Dialog(
       child: Container(
         height: 300.0,
         width: 300.0,
@@ -82,8 +86,8 @@ class _CameraState extends State<Camera> {
                       color: Colors.black,
                       fontWeight: FontWeight.w600)),
               Container(
-                color: Colors.white,
-                decoration: BoxDecoration(
+               
+                decoration: BoxDecoration( color: Colors.white,
                   border: Border.all(width: 1.0, color: Colors.grey),
                 ),
                 child: Text(
@@ -95,8 +99,8 @@ class _CameraState extends State<Camera> {
                         fontWeight: FontWeight.w500)),
               ),
               Container(
-                color: Colors.white,
-                decoration: BoxDecoration(
+                
+                decoration: BoxDecoration(color: Colors.white,
                   border: Border.all(width: 1.0, color: Colors.grey),
                 ),
                 child: Text(
@@ -108,12 +112,12 @@ class _CameraState extends State<Camera> {
                         fontWeight: FontWeight.w500)),
               ),
               Container(
-                color: Colors.white,
-                decoration: BoxDecoration(
+                
+                decoration: BoxDecoration(color: Colors.white,
                   border: Border.all(width: 1.0, color: Colors.grey),
                 ),
                 child: Text(
-                    '3) For any known mistakes in our food ingredient prediction, please assist us by entering the correct name to make this app better for everyone 😃',
+                    '3) For any known mistakes in our food ingredient prediction, please assist us by entering the correct name to make this app better for everyone ??',
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 20.0,
@@ -121,52 +125,69 @@ class _CameraState extends State<Camera> {
                         fontWeight: FontWeight.w500)),
               ),
               RaisedButton(
-                color: Colors.red,
+                color: const Color(0xffEF383F),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.pop(context);
                 },
                 child: Text(
-                  'Cancel!',
+                  'GOT IT!',
                   style: TextStyle(fontSize: 18.0, color: Colors.white),
                 ),
               )
             ]),
       ),
-    );
-    showDialog(
-        context: context, builder: (BuildContext context) => dialogWithImage);
+    );});
   }
 
+
+
   Widget build(BuildContext context) {
-    if (!isReady && !controller.value.isInitialized) {
-      return Container();
+    if (!isReady && controller == null && controller.value == null && !controller.value.isInitialized) {
+      return showTips(context);
     }
     return new Stack(
-      alignment: FractionalOffset.center,
+      alignment: FractionalOffset.center, 
       children: <Widget>[
         new Positioned.fill(
-          child: showCapturedPhoto
-              ? new AspectRatio(
+          child: 
+          new AspectRatio(
                   aspectRatio: controller.value.aspectRatio,
                   child: new CameraPreview(controller))
-              : t,
         ),
-        new GestureDetector(
-          onTap: () => onCaptureButtonPressed(),
-          child: new Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.1,
-            width: 104.0,
-            height: 104.0,
-            child: new Image.asset(
+      !showCapturedPhoto ?  new Positioned(
+            bottom: MediaQuery.of(context).size.height * 0.05,
+            width: 90.0,
+            height: 90.0,
+            child: new GestureDetector(
+              onTap: () => onCaptureButtonPressed(),
+              child:Image.asset(
               'assets/images/capture.png',
               fit: BoxFit.contain,
+            ) 
+            ) ,
+          )
+        :
+                new Positioned(
+            bottom: MediaQuery.of(context).size.height * 0.1,
+            width: MediaQuery.of(context).size.width * 0.90,
+            height: 104.0,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children:<Widget>[ 
+                Container(
+                width: 104.0,
+            height: 104.0,
+            child:new Image.asset(
+              'assets/images/send.png',
+              fit: BoxFit.contain,
             ),
-          ),
-        ),
+           )] )),
+        
+        !hideModal ?
         new Align(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.center,
           child: this.showCustomDialogWithImage(context),
-        )
+        ) : Container(),
       ],
     );
   }
