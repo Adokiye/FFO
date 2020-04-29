@@ -5,12 +5,13 @@ import 'package:ffo/components/Header/CancelHeader/transparentHeader.dart';
 import 'package:ffo/models/singleIngredient.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:ffo/components/ShowUp/showUp.dart';
+import 'package:ffo/helpers/showUp.dart';
 import '../components/Button/YellowButton/yellowButton.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:ffo/screens/notFound.dart';
 import 'package:ffo/screens/home.dart';
-
+import 'package:cloudinary_client/cloudinary_client.dart';
+import 'package:intl/intl.dart';
 class ImagePreview extends StatefulWidget {
   final String path;
   ImagePreview({
@@ -25,6 +26,8 @@ class _ImagePreviewState extends State<ImagePreview> {
   bool showLoader = false;
   bool isRecognized = false;
   String newName = 'Onions';
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   Future<SingleIngredient> fetchPost(context) async {
     final response = await http.get('http://test');
     if (response.statusCode == 200) {
@@ -44,10 +47,48 @@ class _ImagePreviewState extends State<ImagePreview> {
       throw Exception('Failed to load data');
     }
   }
+    _addIngredient(name) async {
+    DateTime now = DateTime.now();
+    setState(() {
+      showLoader = true;
+    });
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
+    CloudinaryClient client = new CloudinaryClient(
+        '892238245892288', '_qf4GlSi4m1TQOd44N_V5lHJKq0', 'gorge');
+    await client
+        .uploadImage(widget.path,
+            filename: name + formattedDate, folder: 'ffo')
+        .then((result) {
+      print("CLOUDINARY:: ${result.secure_url}==> result");
+      setState(() {
+      showLoader = false;
+    });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(
+            name: name,
+          ),
+        ),
+      );
+    }).catchError((error) => {
+      
+       Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(
+            name: name,
+          ),
+        ),
+      )
+      
+     } );
+  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      key: _scaffoldKey,
         body: new Stack(
               alignment: FractionalOffset.center,
             children: <Widget>[
@@ -60,15 +101,7 @@ class _ImagePreviewState extends State<ImagePreview> {
               alignment: Alignment.center,
             ),
           ),
-          this.showLoader
-              ? new Align(
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator(
-                    backgroundColor: const Color(0xffEF383F),
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        const Color(0xffFBAE17)),
-                  ))
-              : Container(),
+
           new Positioned(
             child: Container(
               width: MediaQuery.of(context).size.width,
@@ -126,14 +159,7 @@ class _ImagePreviewState extends State<ImagePreview> {
                         margin: EdgeInsets.only(top: 20.0),
                         child: YellowButton(
                           text: 'ADD',
-                          onPressed: () {
-                                     Navigator.push(
-          context,
-          PageTransition(
-              type: PageTransitionType.rightToLeft,
-              child: MyHomePage(name: newName,)
-));
-                          },
+                          onPressed: () => _addIngredient(newName)
                         )),
                     GestureDetector(
                       onTap: (){},
@@ -148,7 +174,16 @@ class _ImagePreviewState extends State<ImagePreview> {
                   ]),
               delay: 1000,
             ),
-          )
+          ),
+                    this.showLoader
+              ? new Align(
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(
+                    backgroundColor: const Color(0xffEF383F),
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                        const Color(0xffFBAE17)),
+                  ))
+              : Container(),
         ]));
   }
 }
