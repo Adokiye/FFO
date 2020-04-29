@@ -11,6 +11,9 @@ import 'package:flutter/services.dart';
 import 'package:ffo/helpers/firebase.dart';
 import 'package:ffo/screens/home.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
+import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
+import '../components/FoodBox/AddedFoodBox/addedFoodBox.dart';
 
 class AddNewIngredient extends StatefulWidget {
   final String path;
@@ -26,7 +29,12 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
   final textController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   List<Ingredients> items;
+  List<Ingredients> newItems;
+  List<Ingredients> chosenItems = List<Ingredients>();
+
   bool showLoader = false;
+  FirebaseFirestoreService db = new FirebaseFirestoreService();
+  StreamSubscription<QuerySnapshot> ingredientsSub;
   _addIngredient(name) async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
@@ -67,6 +75,92 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
               ),
               duration: Duration(seconds: 3),
             )));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    items = new List();
+    ingredientsSub?.cancel();
+    ingredientsSub = db.getIngredientsList().listen((QuerySnapshot snapshot) {
+      final List<Ingredients> ings = snapshot.documents
+          .map((documentSnapshot) => Ingredients.fromMap(documentSnapshot.data))
+          .toList();
+      setState(() {
+        this.items = ings;
+      });
+    });
+    textController.addListener(_textListener);
+    if (this.items.isEmpty) {
+      _asyncMethod();
+    }
+  }
+
+  @override
+  void dispose() {
+    ingredientsSub?.cancel();
+    super.dispose();
+    textController.dispose();
+  }
+
+  _removeChosen(index) {
+    setState(() {
+      if (chosenItems.isNotEmpty) {
+        items.add(chosenItems[index]);
+      }
+      print(items.length);
+      chosenItems.removeAt(index);
+    });
+  }
+
+  _setChosen(Ingredients ingredient) {
+    print(ingredient.name);
+    var check =
+        chosenItems.where((item) => item.name == ingredient.name).toList();
+    if (check.isEmpty) {
+      setState(() {
+        chosenItems.add(ingredient);
+        items.removeWhere((itemM) => itemM.name == ingredient.name);
+        newItems = new List();
+        textController.clear();
+        FocusScope.of(context).unfocus();
+        _addIngredient(ingredient.name);
+      });
+    }
+  }
+
+  _asyncMethod() async {
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('No Internet Connection',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 15.0,
+              color: Colors.white,
+              fontWeight: FontWeight.w300,
+            )),
+        // duration: Duration(seconds: 3),
+      ));
+    }
+  }
+
+  _textListener() {
+    setState(() {
+      //chosenItems.forEach((item) => items.removeWhere((itemM)=> itemM.name == item.name));
+      print(items.length);
+      newItems = items
+          .where((item) => item.name
+              .toString()
+              .toLowerCase()
+              .contains(this.textController.text.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
@@ -113,6 +207,87 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
                         const Color(0xffFBAE17)),
                   ))
                 : Container(),
+            TextField(
+              controller: textController,
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 13.0,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                hintText: 'Enter ingredient name',
+                hintStyle: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 13.0,
+                  color: const Color(0xff979797),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: const Color(0xffDCE0E7), width: 1.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: const Color(0xffEF383F), width: 1.0),
+                ),
+                fillColor: const Color(0xfffafafb),
+                filled: true,
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: const Color(0xffEF383F),
+                  size: 25.0,
+                ),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+            textController.text == '' && chosenItems.isEmpty && items.isNotEmpty
+                ? Center(
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: 5,
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              return new GestureDetector(
+                                  onTap: () => _setChosen(items[index]),
+                                  child: AddFoodBox(
+                                    text: items[index].name,
+                                  ));
+                            })))
+                : Container(),
+            textController.text != ''
+                ? Center(
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: newItems.length,
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              print(newItems[index]);
+                              return new GestureDetector(
+                                  onTap: () => _setChosen(newItems[index]),
+                                  child: AddFoodBox(
+                                    text: newItems[index].name,
+                                  ));
+                            })))
+                : Container(),
+            chosenItems.isNotEmpty
+                ? Center(
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: chosenItems.length,
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              return new AddedFoodBox(
+                                text: chosenItems[index].name,
+                                imageUrl: chosenItems[index].image,
+                                onPressed: () => _removeChosen(index),
+                              );
+                            })))
+                : Container()
           ])),
     );
   }
