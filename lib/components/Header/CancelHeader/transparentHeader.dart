@@ -14,7 +14,7 @@ class _TransparentHeaderState extends State<TransparentHeader> {
   @override
   Widget build(BuildContext context) {
     return new Container(
-        width: MediaQuery.of(context).size.width * 0.85,
+        width: MediaQuery.of(context).size.width * 0.90,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,7 +54,7 @@ class _TransparentHeaderState extends State<TransparentHeader> {
                   child: Center(
                       child: Text(
                     'ingredient recognized',
-                    style: TextStyle(color: Colors.white, fontSize: 12.0),
+                    style: TextStyle(color: Colors.white, fontSize: 14.0),
                   )),
                 ))
           ],
