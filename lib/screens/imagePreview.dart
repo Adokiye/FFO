@@ -7,6 +7,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:ffo/components/ShowUp/showUp.dart';
 import '../components/Button/YellowButton/yellowButton.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:ffo/screens/notFound.dart';
+import 'package:ffo/screens/home.dart';
 
 class ImagePreview extends StatefulWidget {
   final String path;
@@ -21,8 +24,8 @@ class ImagePreview extends StatefulWidget {
 class _ImagePreviewState extends State<ImagePreview> {
   bool showLoader = false;
   bool isRecognized = false;
-  String newName;
-  Future<SingleIngredient> fetchPost() async {
+  String newName = 'Onions';
+  Future<SingleIngredient> fetchPost(context) async {
     final response = await http.get('http://test');
     if (response.statusCode == 200) {
       print('Received data');
@@ -31,6 +34,13 @@ class _ImagePreviewState extends State<ImagePreview> {
       setState(() {
         isRecognized = false;
       });
+         Navigator.push(
+          context,
+          PageTransition(
+              type: PageTransitionType.downToUp,
+              child: NotFound(header: 'Ingredient not recognized', 
+              subText: 'Try taking a clearer picture',)
+));
       throw Exception('Failed to load data');
     }
   }
@@ -39,7 +49,7 @@ class _ImagePreviewState extends State<ImagePreview> {
   Widget build(BuildContext context) {
     return new Scaffold(
         body: new Stack(
-            //  alignment: FractionalOffset.center,
+              alignment: FractionalOffset.center,
             children: <Widget>[
           new Positioned.fill(
             child: Image.file(
@@ -88,7 +98,7 @@ class _ImagePreviewState extends State<ImagePreview> {
           //   width: 70.0,
           //   height: 70.0,
           //   child: new GestureDetector(
-          //       onTap: () => fetchPost().then((value) {
+          //       onTap: () => fetchPost(context).then((value) {
           //             setState(() {
           //               newName = value.name;
           //               isRecognized = true;
@@ -103,31 +113,38 @@ class _ImagePreviewState extends State<ImagePreview> {
             bottom: MediaQuery.of(context).size.height * 0.07,
             child: ShowUp(
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.90,
-                      child: Text("Onions",
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.01),
+                      child: Text(newName,
                           style: TextStyle(
                               color: Colors.white,
                             fontSize: 30,
-
                               fontWeight: FontWeight.w600)),
                     ),
                     Container(
                         margin: EdgeInsets.only(top: 20.0),
                         child: YellowButton(
                           text: 'ADD',
-                          onPressed: () {},
+                          onPressed: () {
+                                     Navigator.push(
+          context,
+          PageTransition(
+              type: PageTransitionType.rightToLeft,
+              child: MyHomePage(name: newName,)
+));
+                          },
                         )),
-                    Container(
-                      margin: EdgeInsets.only(top: 16.0),
+                    GestureDetector(
+                      onTap: (){},
+                      child: Container(
+                      margin: EdgeInsets.only(top: 14.0),
                       child: Text("Wrong Ingredient?",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                           )),
-                    )
+                    ))
                   ]),
               delay: 1000,
             ),

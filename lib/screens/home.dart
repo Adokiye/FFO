@@ -18,9 +18,9 @@ import 'package:ffo/helpers/enterExitRoute.dart';
 import 'package:page_transition/page_transition.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
-
+  final String name;
+MyHomePage({Key key, this.title, this.name}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -51,6 +51,34 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
+  _newChosen(String name){
+        print(name);
+       var checkItems = items.where((item) => item.name.toLowerCase().trim() == name.toLowerCase().trim()).toList();
+    var check =
+        chosenItems.where((item) => item.name.toLowerCase().trim() == name.toLowerCase().trim()).toList();
+    if (check.isEmpty) {
+      setState(() {
+        chosenItems.add(checkItems.elementAt(0));
+        chosenNames.add(checkItems.elementAt(0).name);
+        items.removeWhere((itemM) => itemM.name.toLowerCase().trim() == name.toLowerCase().trim());
+        newItems = new List();
+        textController.clear();
+        FocusScope.of(context).unfocus();
+      });
+    }else{
+             _scaffoldKey.currentState.showSnackBar(
+  SnackBar(
+    content: Text(name+ ' has already been added', 
+    style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, 
+    color: Colors.white, fontWeight: FontWeight.w300, ))
+    ,
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: const Color(0xffEF383F),
+    elevation: 0.0,
+  ));
+    }
+  }
+
 
   _removeChosen(index) {
     setState(() {
@@ -79,6 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
     textController.addListener(_textListener);
     if (this.items.isEmpty) {
       _asyncMethod();
+    }
+    if(widget.name.isNotEmpty){
+      _newChosen(widget.name);
     }
   }
 
