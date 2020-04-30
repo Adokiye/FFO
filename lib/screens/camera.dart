@@ -94,7 +94,7 @@ class _CameraState extends State<Camera> {
             contentPadding: EdgeInsets.only(top: 10.0),
             content: Container(
              // height: 300.0,
-              width: MediaQuery.of(context).size.width *0.85,
+              width: MediaQuery.of(context).size.width *0.90,
               decoration: BoxDecoration(color: Colors.white,
                 borderRadius: BorderRadius.all( Radius.circular(32.0)),
         //      borderRadius: BorderRadius.circular(15.0)
@@ -106,7 +106,7 @@ class _CameraState extends State<Camera> {
                     Text('Before you scan',
                         style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 24.0,
+                            fontSize: 20.0,
                             color: Colors.black,
                             fontWeight: FontWeight.w600)),
                     Container(
@@ -125,7 +125,7 @@ class _CameraState extends State<Camera> {
                           '1) Please make sure your hands doesnt interfere with the picture being snapped',
                           style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 20.0,
+                              fontSize: 12.0,
                               color: Colors.black,
                               fontWeight: FontWeight.w300)),
                     ),
@@ -146,7 +146,7 @@ class _CameraState extends State<Camera> {
                           '2) Please try to take the picture in a well lighted area for better accuracy',
                           style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 20.0,
+                              fontSize: 12.0,
                               color: Colors.black,
                               fontWeight: FontWeight.w300)),
                     ),
@@ -165,7 +165,7 @@ class _CameraState extends State<Camera> {
                           '3) For any known mistakes in our food ingredient prediction, kindly assist us by entering the correct name, Let\'s make this app better 😃',
                           style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 20.0,
+                              fontSize: 12.0,
                               color: Colors.black,
                               fontWeight: FontWeight.w300)),
                     ),

@@ -187,8 +187,9 @@ class _ImagePreviewState extends State<ImagePreview> {
               : Container(),
           new Positioned(
             top: MediaQuery.of(context).size.height * 0.04,
-            child: Center(
-                child: TransparentHeader(
+            child: Container(
+        width: MediaQuery.of(context).size.width * 0.85,
+        child: TransparentHeader(
                     isRecognized: newName != null ? true : false)),
           ),
        newName == null
@@ -244,7 +245,7 @@ class _ImagePreviewState extends State<ImagePreview> {
                               child:Text("Wrong Ingredient?",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 20,
+                                  fontSize: 16,
                                 )),
                          )   ))
                     ]),
