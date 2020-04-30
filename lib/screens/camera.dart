@@ -29,7 +29,7 @@ class _CameraState extends State<Camera> {
   void initState() {
     super.initState();
     _initializeCamera();
-    SchedulerBinding.instance.addPostFrameCallback((_) => showTips(context));
+    SchedulerBinding.instance.addPostFrameCallback((_) => showTips( this.context));
   }
 
   @override
@@ -87,11 +87,11 @@ class _CameraState extends State<Camera> {
   showTips(context) {
     return showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (context) {
           return Dialog(
             child: Container(
-              height: 300.0,
-              width: 300.0,
+             // height: 300.0,
+              width: MediaQuery.of(context).size.width *0.85,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[

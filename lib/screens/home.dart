@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (this.items.isEmpty) {
       _asyncMethod();
     }
-    if(widget.name.isNotEmpty){
+    if(widget.name != null){
       _newChosen(widget.name);
     }
   }

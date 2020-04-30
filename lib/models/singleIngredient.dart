@@ -1,12 +1,10 @@
 class SingleIngredient {
   final String name;
-  final String image;
  
-  SingleIngredient({this.name, this.image});
+  SingleIngredient({this.name});
    factory SingleIngredient.fromJson(Map<String,dynamic> json) {
     return SingleIngredient(
-      name: json['name'],
-      image: json['image']
+      name: json['Prediction']
     );
   }
 

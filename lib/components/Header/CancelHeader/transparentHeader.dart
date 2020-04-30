@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:page_transition/page_transition.dart';
+import 'package:ffo/screens/home.dart';
 class TransparentHeader extends StatefulWidget {
   final bool isRecognized;
   TransparentHeader({
@@ -35,7 +36,12 @@ class _TransparentHeaderState extends State<TransparentHeader> {
                         child: Image.asset('assets/images/whiteCancel.png')),
                   )),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                type: PageTransitionType
+                                                    .leftToRight,
+                                                child: MyHomePage()));
               },
             ),
             AnimatedOpacity(
