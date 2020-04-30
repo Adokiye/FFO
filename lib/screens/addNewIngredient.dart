@@ -169,7 +169,8 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
       backgroundColor: Colors.white,
       key: _scaffoldKey,
       body: SafeArea(
-          child: Column(
+          child:   SingleChildScrollView(
+                              child:Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -178,7 +179,7 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
                 child: Container(
                     width: MediaQuery.of(context).size.width * 0.85,
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.04,
+                        top: MediaQuery.of(context).size.height * 0.02,
                         bottom: 12.0),
                     child: HeaderText(
                       text: 'Add Ingredient',
@@ -194,20 +195,27 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
             Center(
                 child: Container(
                     width: MediaQuery.of(context).size.width * 0.85,
+                    margin: EdgeInsets.only(bottom: 12.0),
                     padding: EdgeInsets.only(top: 12.0),
                     child: LightText(
                       text:
-                          'Add this ingredient to our database for better identification later on. For Food Only\'s Nigerian ingredients model still has a lot to learn and with your help it can get smarter 😉.',
+                          'Add this ingredient to our database for better identification later on. For Food Only\'s Nigerian ingredients model still has a lot to learn and with your help For food only will get smarter 😉.',
                     ))),
             this.showLoader
                 ? Center(
-                    child: CircularProgressIndicator(
+                    child: Container(
+                                            margin: EdgeInsets.only(
+                                                top: 10.0, bottom: 10.0),
+                                            child:CircularProgressIndicator(
                     backgroundColor: const Color(0xffEF383F),
                     valueColor: new AlwaysStoppedAnimation<Color>(
                         const Color(0xffFBAE17)),
-                  ))
+                   )   ))
                 : Container(),
-            TextField(
+           Center(
+             child: Container(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: TextField(
               controller: textController,
               style: TextStyle(
                 fontFamily: 'Poppins',
@@ -238,7 +246,7 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
                 ),
               ),
               keyboardType: TextInputType.text,
-            ),
+             )  )  ),
             textController.text == '' && chosenItems.isEmpty && items.isNotEmpty
                 ? Center(
                     child: Container(
@@ -288,7 +296,7 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
                               );
                             })))
                 : Container()
-          ])),
+          ]))),
     );
   }
 }

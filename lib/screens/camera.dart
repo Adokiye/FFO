@@ -88,23 +88,38 @@ class _CameraState extends State<Camera> {
     return showDialog(
         context: context,
         builder: (context) {
-          return Dialog(
-            child: Container(
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            contentPadding: EdgeInsets.only(top: 10.0),
+            content: Container(
              // height: 300.0,
               width: MediaQuery.of(context).size.width *0.85,
+              decoration: BoxDecoration(color: Colors.white,
+                borderRadius: BorderRadius.all( Radius.circular(32.0)),
+        //      borderRadius: BorderRadius.circular(15.0)
+              ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text('TIPS',
+                    Text('Before you scan',
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 24.0,
                             color: Colors.black,
                             fontWeight: FontWeight.w600)),
                     Container(
+                      margin: EdgeInsets.symmetric(vertical: 10.0),
+
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(width: 1.0, color: Colors.grey),
+                        border: Border(
+      bottom: BorderSide( //                   <--- left side
+        color: Colors.grey,
+        width: 0.5,
+      ),
+    ),
                       ),
                       child: Text(
                           '1) Please make sure your hands doesnt interfere with the picture being snapped',
@@ -112,12 +127,20 @@ class _CameraState extends State<Camera> {
                               fontFamily: 'Poppins',
                               fontSize: 20.0,
                               color: Colors.black,
-                              fontWeight: FontWeight.w500)),
+                              fontWeight: FontWeight.w300)),
                     ),
                     Container(
+              //        margin: EdgeInsets.symmetric(vertical: 10.0),
+                      
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(width: 1.0, color: Colors.grey),
+                        
+                                          border: Border(
+      bottom: BorderSide( //                   <--- left side
+        color: Colors.grey,
+        width: 0.5,
+      ),
+    ),
                       ),
                       child: Text(
                           '2) Please try to take the picture in a well lighted area for better accuracy',
@@ -125,31 +148,42 @@ class _CameraState extends State<Camera> {
                               fontFamily: 'Poppins',
                               fontSize: 20.0,
                               color: Colors.black,
-                              fontWeight: FontWeight.w500)),
+                              fontWeight: FontWeight.w300)),
                     ),
                     Container(
+                  //    margin: EdgeInsets.only(bottom: 10.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(width: 1.0, color: Colors.grey),
+                                             border: Border(
+      bottom: BorderSide( //                   <--- left side
+        color: Colors.grey,
+        width: 0.5,
+      ),
+    ),
                       ),
                       child: Text(
-                          '3) For any known mistakes in our food ingredient prediction, please assist us by entering the correct name to make this app better for everyone ??',
+                          '3) For any known mistakes in our food ingredient prediction, kindly assist us by entering the correct name, Let\'s make this app better 😃',
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 20.0,
                               color: Colors.black,
-                              fontWeight: FontWeight.w500)),
+                              fontWeight: FontWeight.w300)),
                     ),
-                    RaisedButton(
+                    ButtonTheme(
+  minWidth: MediaQuery.of(context).size.width *0.85,
+  height: 60.0,
+  child:RaisedButton(
+     shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(32.0))),
                       color: const Color(0xffEF383F),
                       onPressed: () {
                         Navigator.pop(context);
                       },
                       child: Text(
                         'GOT IT!',
-                        style: TextStyle(fontSize: 18.0, color: Colors.white),
+                        style: TextStyle(fontSize: 20.0, color: Colors.white),
                       ),
-                    )
+                    ))
                   ]),
             ),
           );

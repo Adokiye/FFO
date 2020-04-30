@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   _newChosen(String name){
         print(name);
-       var checkItems = items.where((item) => item.name.toLowerCase().trim() == name.toLowerCase().trim()).toList();
+       var checkItems = items.where((item) => item.name.toLowerCase() == name.toLowerCase()).toList();
     var check =
         chosenItems.where((item) => item.name.toLowerCase().trim() == name.toLowerCase().trim()).toList();
     if (check.isEmpty) {
@@ -103,14 +103,15 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         this.items = ings;
       });
-    });
+        if(widget.name != null){
+      _newChosen(widget.name);
+    }
+    }, );
     textController.addListener(_textListener);
     if (this.items.isEmpty) {
       _asyncMethod();
     }
-    if(widget.name != null){
-      _newChosen(widget.name);
-    }
+   
   }
 
   @override

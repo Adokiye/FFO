@@ -1,10 +1,10 @@
 class SingleIngredient {
-  final String name;
+  final String Prediction;
  
-  SingleIngredient({this.name});
+  SingleIngredient({this.Prediction});
    factory SingleIngredient.fromJson(Map<String,dynamic> json) {
     return SingleIngredient(
-      name: json['Prediction']
+      Prediction: json['Prediction']
     );
   }
 
