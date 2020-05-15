@@ -7,5 +7,4 @@ class SingleIngredient {
       Prediction: json['Prediction']
     );
   }
-
 }

@@ -16,51 +16,78 @@ import 'package:ffo/screens/camera.dart';
 import 'package:ffo/screens/cooking.dart';
 import 'package:ffo/helpers/enterExitRoute.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+import 'package:ffo/providers/chosenItems.dart';
 
 class MyHomePage extends StatefulWidget {
-  final String title;
-  final String name;
 MyHomePage({Key key, this.title, this.name}) : super(key: key);
+
+  final String name;
+  final String title;
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Ingredients> items;
-  List<Ingredients> newItems;
-  bool cooking = false;
   List<Ingredients> chosenItems = List<Ingredients>();
   List<String> chosenNames = List<String>();
+  bool cooking = false;
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
+  List<Ingredients> items;
+  List<Ingredients> newItems;
   final textController = TextEditingController();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  @override
+  void dispose() {
+    ingredientsSub?.cancel();
+    super.dispose();
+    textController.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    items = new List();
+    // ingredientsSub?.cancel();
+    // ingredientsSub = db.getIngredientsList().listen((QuerySnapshot snapshot) {
+    //   final List<Ingredients> ings = snapshot.documents
+    //       .map((documentSnapshot) => Ingredients.fromMap(documentSnapshot.data))
+    //       .toList();
+    //         Provider.of<ChosenItemsModel>(context, listen: false).initialItems(ings);
+        if(widget.name != null){
+      _newChosen(widget.name);
+    }
+    // }, 
+    // );
+    textController.addListener(_textListener);
+    if (this.items.isEmpty) {
+      _asyncMethod();
+    }
+   
+  }
 
   _setChosen(Ingredients ingredient) {
     print(ingredient.name);
-    var check =
-        chosenItems.where((item) => item.name == ingredient.name).toList();
-    if (check.isEmpty) {
+      Provider.of<ChosenItemsModel>(context, listen: false).add(ingredient);
       setState(() {
-        chosenItems.add(ingredient);
-        chosenNames.add(ingredient.name);
-        items.removeWhere((itemM) => itemM.name == ingredient.name);
         newItems = new List();
         textController.clear();
         FocusScope.of(context).unfocus();
       });
-    }
   }
+
   _newChosen(String name){
         print(name);
-       var checkItems = items.where((item) => item.name.toLowerCase() == name.toLowerCase()).toList();
+       var checkItems = Provider.of<ChosenItemsModel>(context, listen: false).items.where((item) => item.name.toLowerCase() == name.toLowerCase()).toList();
     var check =
         chosenItems.where((item) => item.name.toLowerCase().trim() == name.toLowerCase().trim()).toList();
     if (check.isEmpty) {
+      Provider.of<ChosenItemsModel>(context, listen: false).add(checkItems.elementAt(0));
       setState(() {
-        chosenItems.add(checkItems.elementAt(0));
-        chosenNames.add(checkItems.elementAt(0).name);
-        items.removeWhere((itemM) => itemM.name.toLowerCase().trim() == name.toLowerCase().trim());
         newItems = new List();
         textController.clear();
         FocusScope.of(context).unfocus();
@@ -79,58 +106,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-
   _removeChosen(index) {
-    setState(() {
-      if (chosenItems.isNotEmpty) {
-        items.add(chosenItems[index]);
-      }
-      print(items.length);
-      chosenItems.removeAt(index);
-      chosenNames.removeAt(index);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    items = new List();
-    ingredientsSub?.cancel();
-    ingredientsSub = db.getIngredientsList().listen((QuerySnapshot snapshot) {
-      final List<Ingredients> ings = snapshot.documents
-          .map((documentSnapshot) => Ingredients.fromMap(documentSnapshot.data))
-          .toList();
-      setState(() {
-        this.items = ings;
-      });
-        if(widget.name != null){
-      _newChosen(widget.name);
-    }
-    }, );
-    textController.addListener(_textListener);
-    if (this.items.isEmpty) {
-      _asyncMethod();
-    }
-   
-  }
-
-  @override
-  void dispose() {
-    ingredientsSub?.cancel();
-    super.dispose();
-    textController.dispose();
+   Provider.of<ChosenItemsModel>(context, listen: false).removeItem(index);
   }
 
   _textListener() {
     setState(() {
       //chosenItems.forEach((item) => items.removeWhere((itemM)=> itemM.name == item.name));
       print(items.length);
-      newItems = items
+      newItems = Provider.of<ChosenItemsModel>(context, listen: false).items
           .where((item) => item.name
               .toString()
               .toLowerCase()
               .contains(this.textController.text.toLowerCase()))
           .toList();
+          
     });
   }
 
@@ -157,6 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+      final appState = Provider.of<ChosenItemsModel>(context);
     return Scaffold(
         backgroundColor: Colors.white,
         key: _scaffoldKey,
@@ -227,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   keyboardType:
                                                       TextInputType.text,
                                                 ))))),
-                                chosenItems.isEmpty && items.isEmpty
+                                appState.chosenItems.isEmpty && appState.items.isEmpty
                                     ? Center(
                                         child: Container(
                                             margin: EdgeInsets.only(
@@ -242,8 +233,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                             )))
                                     : Container(),
                                 textController.text == '' &&
-                                        chosenItems.isEmpty &&
-                                        items.isNotEmpty
+                                        appState.chosenItems.isEmpty &&
+                                        appState.items.isNotEmpty
                                     ? Center(
                                         child: Container(
                                             width: MediaQuery.of(context)
@@ -253,14 +244,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                             child: ListView.builder(
                                                 scrollDirection: Axis.vertical,
                                                 shrinkWrap: true,
-                                                itemCount: 5,
+                                                itemCount: appState.items.length,
                                                 itemBuilder: (BuildContext ctxt,
                                                     int index) {
                                                   return new GestureDetector(
                                                       onTap: () => _setChosen(
                                                           items[index]),
                                                       child: AddFoodBox(
-                                                        text: items[index].name,
+                                                        text: appState.items[index].name,
                                                       ));
                                                 })))
                                     : Container(),
@@ -287,7 +278,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       ));
                                                 })))
                                     : Container(),
-                                chosenItems.isNotEmpty
+                                appState.chosenItems.isNotEmpty
                                     ? Center(
                                         child: Container(
                                             width: MediaQuery.of(context)
@@ -297,13 +288,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                             child: ListView.builder(
                                                 scrollDirection: Axis.vertical,
                                                 shrinkWrap: true,
-                                                itemCount: chosenItems.length,
+                                                itemCount: appState.chosenItems.length,
                                                 itemBuilder: (BuildContext ctxt,
                                                     int index) {
                                                   return new AddedFoodBox(
                                                     text:
-                                                        chosenItems[index].name,
-                                                    imageUrl: chosenItems[index]
+                                                        appState.chosenItems[index].name,
+                                                    imageUrl: appState.chosenItems[index]
                                                         .image,
                                                     onPressed: () =>
                                                         _removeChosen(index),
@@ -311,7 +302,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 })))
                                     : Container()
                               ])),
-                          chosenItems.isNotEmpty && textController.text == ''
+                          appState.chosenItems.isNotEmpty && textController.text == ''
                               ? Positioned(
                                   bottom: 30,
                                   left:
@@ -327,7 +318,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   exitPage:
                                                       MyHomePage(title: 'FFO'),
                                                   enterPage: Recipes(
-                                                      ing: chosenNames,
+                                                      ing: appState.chosenNames,
                                                       title: 'Recipes')));
                                         },
                                       )))

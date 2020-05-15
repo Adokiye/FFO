@@ -199,7 +199,7 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
                     padding: EdgeInsets.only(top: 12.0),
                     child: LightText(
                       text:
-                          'Add this ingredient to our database for better identification later on. For Food Only\'s Nigerian ingredients model still has a lot to learn and with your help For food only will get smarter 😉.',
+                          'Add this ingredient to our database for better identification later on.',
                     ))),
             this.showLoader
                 ? Center(

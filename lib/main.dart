@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ffo/screens/home.dart';
+import 'package:ffo/providers/chosenItems.dart';
 import 'package:ffo/screens/recipes.dart';
 import 'package:ffo/screens/recipeDetails.dart';
+import 'dart:async';
+import 'package:provider/provider.dart';
 
-
-void main() => runApp(MyApp());
-
+void main() => runApp(
+  ChangeNotifierProvider(
+  create: (_) => new ChosenItemsModel(),
+  child: MyApp()
+  ));
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override

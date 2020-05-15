@@ -244,7 +244,7 @@ class _ImagePreviewState extends State<ImagePreview> {
                             child: Center(
                               child:Text("Wrong Ingredient?",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: const Color(0xffEF383F),
                                   fontSize: 16,
                                 )),
                          )   ))
