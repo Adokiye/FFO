@@ -15,6 +15,8 @@ class ChosenItemsModel extends ChangeNotifier {
           .map((documentSnapshot) => Ingredients.fromMap(documentSnapshot.data))
           .toList();
             _items = ings;
+    notifyListeners();
+
     }, );
   }
    FirebaseFirestoreService db = new FirebaseFirestoreService();
@@ -38,14 +40,11 @@ class ChosenItemsModel extends ChangeNotifier {
   /// Adds [item] to cart. This and [removeAll] are the only ways to modify the
   /// cart from the outside.
   void add(Ingredients item) {
-    var check = _chosenItems.where((item) => item.name == item.name).toList();
-    _chosenItems.add(item);
-    _items.remove(item);
-    if (check.isEmpty) {
+    _chosenItems.removeWhere((itemM) => itemM.name == item.name);
+    _chosenNames.removeWhere((itemM) => itemM == item.name);
       _chosenItems.add(item);
       _chosenNames.add(item.name);
       _items.removeWhere((itemM) => itemM.name == item.name);
-    }
     notifyListeners();
   }
 

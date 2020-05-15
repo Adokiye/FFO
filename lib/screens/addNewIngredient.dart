@@ -48,13 +48,14 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
             filename: name + formattedDate, folder: 'unfilteredIngredients')
         .then((result) {
       print("CLOUDINARY:: ${result.secure_url}==> result");
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => MyHomePage(
             name: name,
           ),
         ),
+        (Route<dynamic> route) => false
       );
     }).catchError((error) =>
             //  print("ERROR_CLOUDINARY::  $error");

@@ -61,14 +61,15 @@ class _ImagePreviewState extends State<ImagePreview> {
       );
     }).catchError((error) => {
    //   print(error);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyHomePage(
-                    name: name,
-                  ),
-                ),
-              )
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(
+            name: name,
+          ),
+        ),
+        (Route<dynamic> route) => false
+      )
             });
   }
 
@@ -198,13 +199,15 @@ class _ImagePreviewState extends State<ImagePreview> {
             right: 12.0,
             width: 70.0,
             height: 70.0,
-            child: new GestureDetector(
+            child: Material(
+              color: Colors.transparent,
+              child: new InkWell(
                 onTap: () => this._asyncFileUpload(context),
                 child: Image.asset(
                   'assets/images/send.png',
                   fit: BoxFit.contain,
                 )),
-          ):Container(),
+              )):Container(),
           newName != null
               ? new Positioned(
                   bottom: MediaQuery.of(context).size.height * 0.07,

@@ -122,10 +122,10 @@ class _CameraState extends State<Camera> {
     ),
                       ),
                       child: Text(
-                          '1) Please make sure your hands doesnt interfere with the picture being snapped',
+                          '1) Please make sure your hands doesnt interfere with the picture being snapped.',
                           style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 12.0,
+                              fontSize: 14.0,
                               color: Colors.black,
                               fontWeight: FontWeight.w300)),
                     ),
@@ -143,10 +143,10 @@ class _CameraState extends State<Camera> {
     ),
                       ),
                       child: Text(
-                          '2) Please try to take the picture in a well lighted area for better accuracy',
+                          '2) Please try to take the picture in a well lighted area for better accuracy.',
                           style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 12.0,
+                              fontSize: 14.0,
                               color: Colors.black,
                               fontWeight: FontWeight.w300)),
                     ),
@@ -162,10 +162,10 @@ class _CameraState extends State<Camera> {
     ),
                       ),
                       child: Text(
-                          '3) For any known mistakes in our food ingredient prediction, kindly assist us by entering the correct name, Let\'s make this app better 😃',
+                          '3) For any known mistakes in our food ingredient prediction, kindly assist us by entering the correct name.',
                           style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 12.0,
+                              fontSize: 14.0,
                               color: Colors.black,
                               fontWeight: FontWeight.w300)),
                     ),
@@ -207,12 +207,14 @@ class _CameraState extends State<Camera> {
                   bottom: MediaQuery.of(context).size.height * 0.05,
                   width: 90.0,
                   height: 90.0,
-                  child: new GestureDetector(
+                  child: Material(
+              color: Colors.transparent,
+              child: new InkWell(
                       onTap: () => onCaptureButtonPressed(context),
                       child: Image.asset(
                         'assets/images/capture.png',
                         fit: BoxFit.contain,
-                      )),
+                   ) )),
                 ),
                   new Positioned(
                   top: MediaQuery.of(context).size.height * 0.04,

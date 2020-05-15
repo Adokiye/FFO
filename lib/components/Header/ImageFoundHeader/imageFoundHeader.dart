@@ -32,11 +32,10 @@ class ImageFoundHeader extends StatelessWidget {
   // If the widget is visible, animate to 0.0 (invisible).
   // If the widget is hidden, animate to 1.0 (fully visible).
   opacity: 1.0,
-  duration: Duration(milliseconds: 500),
+  duration: Duration(milliseconds: 1000),
   // The green box must be a child of the AnimatedOpacity widget.
   child: Container(
-    width: 178.0,
-    height: 38.0,
+    padding: EdgeInsets.all(10.0),
     color: Color.fromRGBO(0, 0, 0, 0.5),
     decoration: secondBoxDecorationStyle,
     child: Center(child: Text('ingredient recognized', style: secondTextStyle),),

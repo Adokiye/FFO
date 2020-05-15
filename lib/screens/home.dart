@@ -58,9 +58,6 @@ class _MyHomePageState extends State<MyHomePage> {
     //       .map((documentSnapshot) => Ingredients.fromMap(documentSnapshot.data))
     //       .toList();
     //         Provider.of<ChosenItemsModel>(context, listen: false).initialItems(ings);
-        if(widget.name != null){
-      _newChosen(widget.name);
-    }
     // }, 
     // );
     textController.addListener(_textListener);
@@ -80,41 +77,16 @@ class _MyHomePageState extends State<MyHomePage> {
       });
   }
 
-  _newChosen(String name){
-        print(name);
-       var checkItems = Provider.of<ChosenItemsModel>(context, listen: false).items.where((item) => item.name.toLowerCase() == name.toLowerCase()).toList();
-    var check =
-        chosenItems.where((item) => item.name.toLowerCase().trim() == name.toLowerCase().trim()).toList();
-    if (check.isEmpty) {
-      Provider.of<ChosenItemsModel>(context, listen: false).add(checkItems.elementAt(0));
-      setState(() {
-        newItems = new List();
-        textController.clear();
-        FocusScope.of(context).unfocus();
-      });
-    }else{
-             _scaffoldKey.currentState.showSnackBar(
-  SnackBar(
-    content: Text(name+ ' has already been added', 
-    style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, 
-    color: Colors.white, fontWeight: FontWeight.w300, ))
-    ,
-    behavior: SnackBarBehavior.floating,
-    backgroundColor: const Color(0xffEF383F),
-    elevation: 0.0,
-  ));
-    }
-  }
 
   _removeChosen(index) {
-   Provider.of<ChosenItemsModel>(context, listen: false).removeItem(index);
+   Provider.of<ChosenItemsModel>(context,listen: false).removeItem(index);
   }
 
   _textListener() {
     setState(() {
       //chosenItems.forEach((item) => items.removeWhere((itemM)=> itemM.name == item.name));
       print(items.length);
-      newItems = Provider.of<ChosenItemsModel>(context, listen: false).items
+      newItems = Provider.of<ChosenItemsModel>(context,listen: false).items
           .where((item) => item.name
               .toString()
               .toLowerCase()
@@ -148,6 +120,33 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
       final appState = Provider.of<ChosenItemsModel>(context);
+      if(widget.name != null){
+        var name = widget.name;
+        print(name);
+       var checkItems = appState.items.where((item) => item.name.toLowerCase() == name.toLowerCase()).toList();
+    var check =
+        appState.chosenItems.where((item) => item.name.toLowerCase().trim() == name.toLowerCase().trim()).toList();
+    if (check.isEmpty) {
+      appState.add(checkItems.elementAt(0));
+      setState(() {
+        newItems = new List();
+        textController.clear();
+        FocusScope.of(context).unfocus();
+      });
+    }else{
+  //            _scaffoldKey.currentState.showSnackBar(
+  // SnackBar(
+  //   content: Text(name+ ' has already been added', 
+  //   style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, 
+  //   color: Colors.white, fontWeight: FontWeight.w300, ))
+  //   ,
+  //   behavior: SnackBarBehavior.floating,
+  //   backgroundColor: const Color(0xffEF383F),
+  //   elevation: 0.0,
+  // ));
+    }
+  
+      }
     return Scaffold(
         backgroundColor: Colors.white,
         key: _scaffoldKey,
@@ -249,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     int index) {
                                                   return new GestureDetector(
                                                       onTap: () => _setChosen(
-                                                          items[index]),
+                                                          appState.items[index]),
                                                       child: AddFoodBox(
                                                         text: appState.items[index].name,
                                                       ));
