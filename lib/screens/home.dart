@@ -52,14 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     items = new List();
-    // ingredientsSub?.cancel();
-    // ingredientsSub = db.getIngredientsList().listen((QuerySnapshot snapshot) {
-    //   final List<Ingredients> ings = snapshot.documents
-    //       .map((documentSnapshot) => Ingredients.fromMap(documentSnapshot.data))
-    //       .toList();
-    //         Provider.of<ChosenItemsModel>(context, listen: false).initialItems(ings);
-    // }, 
-    // );
+
     textController.addListener(_textListener);
     if (this.items.isEmpty) {
       _asyncMethod();
@@ -243,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             child: ListView.builder(
                                                 scrollDirection: Axis.vertical,
                                                 shrinkWrap: true,
-                                                itemCount: appState.items.length,
+                                                itemCount: 5,
                                                 itemBuilder: (BuildContext ctxt,
                                                     int index) {
                                                   return new GestureDetector(

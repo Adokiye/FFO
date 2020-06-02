@@ -38,13 +38,18 @@ class AddedFoodBox extends StatelessWidget {
                 ),
                 Spacer(),
                 Material(
+                  color: Colors.transparent,
                     child: InkWell(
                         onTap: onPressed,
-                        child: Icon(
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          child: Center(
+                            child: Icon(
                           Icons.delete,
                           color: const Color(0xffEF383F),
                           size: 20.0,
-                        ))),
+                 ) ) ))),
               ],
             )));
   }

@@ -3,6 +3,7 @@ import '../components/Text/HeaderText/headerText.dart';
 import '../components/FoodBox/RecipeFoodBox/recipeFoodBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
+import "dart:math";
 import 'package:ffo/helpers/firebase.dart';
 import 'package:ffo/models/recipes.dart';
 import 'package:ffo/screens/recipeDetails.dart';
@@ -26,10 +27,12 @@ class Recipes extends StatefulWidget {
 
 class _RecipesState extends State<Recipes> {
   List<RecipesModel> items;
+  List<String> timeValues = ['20mins ', '10mins ', '15mins '];
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
   bool isRecipe = false;
   bool cooking = true;
+  final _random = new Random();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -160,7 +163,7 @@ _asyncMethod();
                       child:  RecipeFoodBox(
                       text: items[index].name,
                       onPressed: null,
-                      time: '20mins ',
+                      time: 'N/A ',
                       imageUrl: items[index].image,
                       ));
                   }))):Container(),

@@ -101,7 +101,7 @@ class _CameraState extends State<Camera> {
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+             //     crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text('Before you scan',
                         style: TextStyle(
@@ -169,6 +169,25 @@ class _CameraState extends State<Camera> {
                               color: Colors.black,
                               fontWeight: FontWeight.w300)),
                     ),
+    //                   Container(
+    //               //    margin: EdgeInsets.only(bottom: 10.0),
+    //                   decoration: BoxDecoration(
+    //                     color: Colors.white,
+    //                                          border: Border(
+    //   bottom: BorderSide( //                   <--- left side
+    //     color: Colors.grey,
+    //     width: 0.5,
+    //   ),
+    // ),
+    //                   ),
+    //                   child: Text(
+    //                       '4) Please try to snap only food items',
+    //                       style: TextStyle(
+    //                           fontFamily: 'Poppins',
+    //                           fontSize: 14.0,
+    //                           color: Colors.black,
+    //                           fontWeight: FontWeight.w300)),
+    //                 ),
                     ButtonTheme(
   minWidth: MediaQuery.of(context).size.width *0.85,
   height: 60.0,

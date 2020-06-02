@@ -51,6 +51,7 @@ class ChosenItemsModel extends ChangeNotifier {
   void removeItem(index) {
     if (_chosenItems.isNotEmpty) {
       _items.add(_chosenItems[index]);
+      _items.sort((a, b) => a.name.compareTo(b.name));
     }
     _chosenItems.removeAt(index);
     _chosenNames.removeAt(index);

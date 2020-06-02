@@ -255,7 +255,7 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
                         child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: 5,
+                            itemCount: 3,
                             itemBuilder: (BuildContext ctxt, int index) {
                               return new GestureDetector(
                                   onTap: () => _setChosen(items[index]),
