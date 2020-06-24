@@ -113,33 +113,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
       final appState = Provider.of<ChosenItemsModel>(context);
-      if(widget.name != null){
-        var name = widget.name;
-        print(name);
-       var checkItems = appState.items.where((item) => item.name.toLowerCase() == name.toLowerCase()).toList();
-    var check =
-        appState.chosenItems.where((item) => item.name.toLowerCase().trim() == name.toLowerCase().trim()).toList();
-    if (check.isEmpty) {
-      appState.add(checkItems.elementAt(0));
-      setState(() {
-        newItems = new List();
-        textController.clear();
-        FocusScope.of(context).unfocus();
-      });
-    }else{
-  //            _scaffoldKey.currentState.showSnackBar(
-  // SnackBar(
-  //   content: Text(name+ ' has already been added', 
-  //   style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, 
-  //   color: Colors.white, fontWeight: FontWeight.w300, ))
-  //   ,
-  //   behavior: SnackBarBehavior.floating,
-  //   backgroundColor: const Color(0xffEF383F),
-  //   elevation: 0.0,
-  // ));
-    }
-  
-      }
     return Scaffold(
         backgroundColor: Colors.white,
         key: _scaffoldKey,

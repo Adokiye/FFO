@@ -10,7 +10,7 @@ class HeaderFoodBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new    Stack(children: <Widget>[
-        Container(
+    imageUrl != '' ?  Container(
           decoration: BoxDecoration(
             color: Colors.transparent,
             image: DecorationImage(
@@ -19,6 +19,12 @@ class HeaderFoodBox extends StatelessWidget {
                 ? NetworkImage(imageUrl)
                 : AssetImage('assets/images/headerFoodBox.png'),
             ),
+          ),
+          width: MediaQuery.of(context).size.width,
+        height: 210.0,
+        ) :  Container(
+          decoration: BoxDecoration(
+            color: Colors.transparent,
           ),
           width: MediaQuery.of(context).size.width,
         height: 210.0,

@@ -15,11 +15,10 @@ class TransparentHeader extends StatefulWidget {
 class _TransparentHeaderState extends State<TransparentHeader> {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-        width: MediaQuery.of(context).size.width * 0.90,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return new Row(
+      mainAxisSize: MainAxisSize.max,
+         // crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: widget.isRecognized ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
           children: <Widget>[
             RawMaterialButton(
               //  fillColor: Colors.white,
@@ -45,15 +44,17 @@ class _TransparentHeaderState extends State<TransparentHeader> {
                     (Route<dynamic> route) => false);
               },
             ),
+           // Spacer(),
             AnimatedOpacity(
                 // If the widget is visible, animate to 0.0 (invisible).
                 // If the widget is hidden, animate to 1.0 (fully visible).
                 opacity: widget.isRecognized ? 1.0 : 0.0,
-                duration: Duration(milliseconds: 500),
+                duration: Duration(milliseconds: 800),
                 // The green box must be a child of the AnimatedOpacity widget.
                 child: Container(
-                  width: 160.0,
-                  height: 38.0,
+                  // width: 160.0,
+                  // height: 38.0,
+                  padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(0, 0, 0, 0.5),
                     borderRadius: BorderRadius.circular(9.0),
@@ -65,6 +66,6 @@ class _TransparentHeaderState extends State<TransparentHeader> {
                   )),
                 ))
           ],
-        ));
+        );
   }
 }

@@ -237,8 +237,10 @@ class _CameraState extends State<Camera> {
                 ),
                   new Positioned(
                   top: MediaQuery.of(context).size.height * 0.04,
-                  child: TransparentHeader(isRecognized: false),
-                ),
+                  child: Container(
+        width: MediaQuery.of(context).size.width * 0.90,
+        child: TransparentHeader(isRecognized: false),
+                   ) ),
               ],
             );
           } else {

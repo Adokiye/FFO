@@ -40,6 +40,7 @@ class ChosenItemsModel extends ChangeNotifier {
   /// Adds [item] to cart. This and [removeAll] are the only ways to modify the
   /// cart from the outside.
   void add(Ingredients item) {
+    print('here');
     _chosenItems.removeWhere((itemM) => itemM.name == item.name);
     _chosenNames.removeWhere((itemM) => itemM == item.name);
       _chosenItems.add(item);
@@ -49,11 +50,18 @@ class ChosenItemsModel extends ChangeNotifier {
   }
 
   void removeItem(index) {
+    print(index); 
+    print(_chosenItems);
     if (_chosenItems.isNotEmpty) {
       _items.add(_chosenItems[index]);
       _items.sort((a, b) => a.name.compareTo(b.name));
     }
+    print("----");
+    print(index);
+   
     _chosenItems.removeAt(index);
+    print("++++----");
+
     _chosenNames.removeAt(index);
     notifyListeners();
   }

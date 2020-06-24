@@ -38,7 +38,7 @@ class ImageFoundHeader extends StatelessWidget {
     padding: EdgeInsets.all(10.0),
     color: Color.fromRGBO(0, 0, 0, 0.5),
     decoration: secondBoxDecorationStyle,
-    child: Center(child: Text('ingredient recognized', style: secondTextStyle),),
+    child: Center(child: Text('Ingredient recognized', style: secondTextStyle),),
   ),
 )
         ],

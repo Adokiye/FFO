@@ -14,6 +14,8 @@ import 'package:intl/intl.dart';
 import 'dart:async';
 import '../components/FoodBox/AddFoodBox/addFoodBox.dart';
 import '../components/FoodBox/AddedFoodBox/addedFoodBox.dart';
+import 'package:provider/provider.dart';
+import 'package:ffo/providers/chosenItems.dart';
 
 class AddNewIngredient extends StatefulWidget {
   final String path;
@@ -36,27 +38,38 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
   FirebaseFirestoreService db = new FirebaseFirestoreService();
   StreamSubscription<QuerySnapshot> ingredientsSub;
   _addIngredient(name) async {
+    setState(() {
+      showLoader = true;
+    });
+    final appState = Provider.of<ChosenItemsModel>(context, listen: false);
+    var checkItems = appState.items
+        .where((item) => item.name.toLowerCase() == name.toLowerCase())
+        .toList();
+    var check = appState.chosenItems
+        .where((item) =>
+            item.name.toLowerCase().trim() == name.toLowerCase().trim())
+        .toList();
+    if (check.isEmpty) {
+      appState.add(checkItems.elementAt(0));
+    }
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
     CloudinaryClient client = new CloudinaryClient(
         '892238245892288', '_qf4GlSi4m1TQOd44N_V5lHJKq0', 'gorge');
-    setState(() {
-      showLoader = true;
-    });
+
     await client
         .uploadImage(widget.path,
             filename: name + formattedDate, folder: 'unfilteredIngredients')
         .then((result) {
       print("CLOUDINARY:: ${result.secure_url}==> result");
       Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MyHomePage(
-            name: name,
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(
+              name: name,
+            ),
           ),
-        ),
-        (Route<dynamic> route) => false
-      );
+          (Route<dynamic> route) => false);
     }).catchError((error) =>
             //  print("ERROR_CLOUDINARY::  $error");
             _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -170,11 +183,11 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
       backgroundColor: Colors.white,
       key: _scaffoldKey,
       body: SafeArea(
-          child:   SingleChildScrollView(
-                              child:Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
+          child: SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
             CancelHeader(),
             Center(
                 child: Container(
@@ -205,49 +218,48 @@ class _AddNewIngredientState extends State<AddNewIngredient> {
             this.showLoader
                 ? Center(
                     child: Container(
-                                            margin: EdgeInsets.only(
-                                                top: 10.0, bottom: 10.0),
-                                            child:CircularProgressIndicator(
-                    backgroundColor: const Color(0xffEF383F),
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        const Color(0xffFBAE17)),
-                   )   ))
+                        margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                        child: CircularProgressIndicator(
+                          backgroundColor: const Color(0xffEF383F),
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              const Color(0xffFBAE17)),
+                        )))
                 : Container(),
-           Center(
-             child: Container(
+            Center(
+                child: Container(
                     width: MediaQuery.of(context).size.width * 0.85,
                     child: TextField(
-              controller: textController,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 13.0,
-                color: Colors.black,
-              ),
-              decoration: InputDecoration(
-                hintText: 'Enter ingredient name',
-                hintStyle: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 13.0,
-                  color: const Color(0xff979797),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: const Color(0xffDCE0E7), width: 1.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: const Color(0xffEF383F), width: 1.0),
-                ),
-                fillColor: const Color(0xfffafafb),
-                filled: true,
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: const Color(0xffEF383F),
-                  size: 25.0,
-                ),
-              ),
-              keyboardType: TextInputType.text,
-             )  )  ),
+                      controller: textController,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 13.0,
+                        color: Colors.black,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Enter ingredient name',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 13.0,
+                          color: const Color(0xff979797),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: const Color(0xffDCE0E7), width: 1.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: const Color(0xffEF383F), width: 1.0),
+                        ),
+                        fillColor: const Color(0xfffafafb),
+                        filled: true,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: const Color(0xffEF383F),
+                          size: 25.0,
+                        ),
+                      ),
+                      keyboardType: TextInputType.text,
+                    ))),
             textController.text == '' && chosenItems.isEmpty && items.isNotEmpty
                 ? Center(
                     child: Container(

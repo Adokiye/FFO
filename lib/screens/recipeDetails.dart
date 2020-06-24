@@ -33,6 +33,14 @@ class _RecipeDetailsState extends State<RecipeDetails> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> steps_list = widget.data.steps.replaceAll('\n', '').split('. ');
+     String new_text = '';
+     String new_ing = '';
+    for(var i = 0;i<steps_list.length;i++){
+      int no = i+1;
+      new_text+="\n"+no.toString()+") "+steps_list[i]+"."+"\n";
+    }
+    
     return Material(
         type: MaterialType.transparency,
         child: Container(
@@ -43,7 +51,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
           children: <Widget>[
         HeaderFoodBox(text: widget.data.name, imageUrl: widget.data.image, onBack: null),
        MenuBar(recipe: _recipe, ingredients: _ingredients,),
-        recipe ? RecipeText(text: widget.data.steps)
+        recipe ? RecipeText(text: new_text)
           : RecipeText(text: widget.data.ingredients.map((item)=> item.name.toString().trim()+'\n').join(""))   
          ],),
           )

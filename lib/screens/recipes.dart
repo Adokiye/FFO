@@ -37,76 +37,105 @@ class _RecipesState extends State<Recipes> {
   @override
   void initState() {
     super.initState();
-   
+
     items = new List();
     ingredientsSub?.cancel();
     ingredientsSub = db.getRecipesList().listen((QuerySnapshot snapshot) {
-       
-            final List<RecipesModel> recs = snapshot.documents
+      final List<RecipesModel> recs = snapshot.documents
           .map(
               (documentSnapshot) => RecipesModel.fromMap(documentSnapshot.data))
           .toList();
-          this.items.clear();
+      this.items.clear();
       outLoop:
       for (var i = 0; i < (recs.length); i++) {
-        inLoop:
-        for (var j = 0; j < (recs[i].ingredients.length); j++) {
-          if (widget.ing
-              .toString()
-              .toLowerCase()
-              .contains(recs[i].ingredients[j].name.toString().toLowerCase())) {
-            setState(() {
-              this.items.add(recs[i]);
-            });
-            continue outLoop;
+        xLoop:
+        for (var k = 0; k < (widget.ing.length); k++) {
+          for (var j = 0; j < (recs[i].ingredients.length); j++) {
+            if (widget.ing[k].toString().toLowerCase().contains(
+                recs[i].ingredients[j].name.toString().toLowerCase())) {
+              if (k == widget.ing.length - 1) {
+                setState(() {
+                  this.items.add(recs[i]);
+                });
+                continue outLoop;
+              } else {
+                continue xLoop;
+              }
+            } else {
+              if (j == recs[i].ingredients.length - 1) {
+                continue outLoop;
+              }
+            }
           }
         }
       }
-      if(this.items.isEmpty){
-_asyncMethod();
+      if (this.items.isEmpty) {
+        _asyncMethod();
         setState(() {
-         isRecipe = false; 
-
+          isRecipe = false;
         });
-      }else{
+      } else {
         setState(() {
-         isRecipe = true; 
-           _scaffoldKey.currentState.showSnackBar(
-  SnackBar(
-    content: this.items.length>1?Text(this.items.length.toString()+' Recipes'+  ' Found '+' 🙂', 
-    style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w300, )):
-    Text(this.items.length.toString()+' Recipe'+  ' Found '+' 🙂', 
-    style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w300, ))
-    ,
-    behavior: SnackBarBehavior.floating,
-    backgroundColor: const Color(0xffEF383F),
-    elevation: 0.0,
-  //  duration: Duration(seconds: 3),
-  ));
-         cooking = false;
+          isRecipe = true;
+          _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: this.items.length > 1
+                ? Text(
+                    this.items.length.toString() +
+                        ' Recipes' +
+                        ' Found ' +
+                        ' 🙂',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 15.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                    ))
+                : Text(
+                    this.items.length.toString() +
+                        ' Recipe' +
+                        ' Found ' +
+                        ' 🙂',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 15.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                    )),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: const Color(0xffEF383F),
+            elevation: 0.0,
+            //  duration: Duration(seconds: 3),
+          ));
+          cooking = false;
         });
       }
-    }); 
-   
+    });
   }
-  _asyncMethod() async{
-                     try {
-  final result = await InternetAddress.lookup('example.com');
-  if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-     setState(() {
-         cooking = false;
+
+  _asyncMethod() async {
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        setState(() {
+          cooking = false;
         });
-    print('connected');
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('No Internet Connection',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 15.0,
+              color: Colors.white,
+              fontWeight: FontWeight.w300,
+            )),
+        //  duration: Duration(seconds: 3),
+      ));
+    }
   }
-} on SocketException catch (_) {
-  print('not connected');
-  _scaffoldKey.currentState.showSnackBar(
-  SnackBar(
-    content: Text('No Internet Connection',style: TextStyle(fontFamily: 'Poppins',fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w300, )),
-  //  duration: Duration(seconds: 3),
-  ));
-}
-  }
+
   @override
   void dispose() {
     ingredientsSub?.cancel();
@@ -116,67 +145,71 @@ _asyncMethod();
   @override
   Widget build(BuildContext context) {
     Widget child;
-    if(cooking && !isRecipe){
+    if (cooking && !isRecipe) {
       child = Cooking();
-    }else if(!cooking && !isRecipe){
-      child = NotFound(header: 'No Recipes Found', subText: 'Try choosing other ingredients',);
-    }else{
+    } else if (!cooking && !isRecipe) {
+      child = NotFound(
+        header: 'No Recipes Found',
+        subText: 'Try choosing other ingredients',
+      );
+    } else {
       child = Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-          //  mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.075),
-                margin: EdgeInsets.symmetric(vertical: 16.0),
-                child: Material(
-                    child: InkWell(
-                        onTap: () => Navigator.pop(context),
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: const Color(0xffEF383F),
-                          size: 24.0,
-                        ))),
-              ),
-              Container(
-                  padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.075),
-                      margin: EdgeInsets.only(bottom: 15.0),
-                  child: HeaderText(
-                    text: 'Recipes Found',
-                  )),
-           items.isNotEmpty ? Expanded(
-           //  constraints: BoxConstraints.expand(),
-             child: Center(
-                child:ListView.builder(
-              scrollDirection: Axis.vertical,
-  //  shrinkWrap: true,
-                  itemCount: items.length,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                 //   print(items[index]);
-                    return new GestureDetector(
-                      onTap: (){
-                         Navigator.push(
-                  context,
-                PageTransition(type: PageTransitionType.rightToLeft, child: RecipeDetails(data: items[index])));
-                      },
-                      child:  RecipeFoodBox(
-                      text: items[index].name,
-                      onPressed: null,
-                      time: 'N/A ',
-                      imageUrl: items[index].image,
-                      ));
-                  }))):Container(),
-                  ],
-                );
+        crossAxisAlignment: CrossAxisAlignment.start,
+        //  mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.075),
+            margin: EdgeInsets.symmetric(vertical: 16.0),
+            child: Material(
+                child: InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: const Color(0xffEF383F),
+                      size: 24.0,
+                    ))),
+          ),
+          Container(
+              padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.075),
+              margin: EdgeInsets.only(bottom: 15.0),
+              child: HeaderText(
+                text: 'Recipes Found',
+              )),
+          items.isNotEmpty
+              ? Expanded(
+                  //  constraints: BoxConstraints.expand(),
+                  child: Center(
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          //  shrinkWrap: true,
+                          itemCount: items.length,
+                          itemBuilder: (BuildContext ctxt, int index) {
+                            //   print(items[index]);
+                            return new GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.rightToLeft,
+                                          child: RecipeDetails(
+                                              data: items[index])));
+                                },
+                                child: RecipeFoodBox(
+                                  text: items[index].name,
+                                  onPressed: null,
+                                  time: 'N/A ',
+                                  imageUrl: items[index].image,
+                                ));
+                          })))
+              : Container(),
+        ],
+      );
     }
     return Scaffold(
-      backgroundColor: Colors.white,
-      key: _scaffoldKey,
-      body: SafeArea(
-        child: child
-              )
-              
-            );
+        backgroundColor: Colors.white,
+        key: _scaffoldKey,
+        body: SafeArea(child: child));
   }
 }

@@ -18,6 +18,8 @@ import 'package:async/async.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 import 'package:ffo/screens/addNewIngredient.dart';
+import 'package:provider/provider.dart';
+import 'package:ffo/providers/chosenItems.dart';
 
 class ImagePreview extends StatefulWidget {
   final String path;
@@ -37,10 +39,20 @@ class _ImagePreviewState extends State<ImagePreview> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   _addIngredient(name, context) async {
-    DateTime now = DateTime.now();
+   
     setState(() {
       showLoader = true;
-    });
+    }); 
+           final appState = Provider.of<ChosenItemsModel>(context, listen: false);
+        print(name);
+       var checkItems = appState.items.where(
+         (item) => item.name.toLowerCase() == name.toLowerCase()).toList();
+    var check =
+        appState.chosenItems.where((item) => item.name.toLowerCase().trim() == name.toLowerCase().trim()).toList();
+    if (check.isEmpty) {
+      appState.add(checkItems.elementAt(0));
+    }
+    DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
     CloudinaryClient client = new CloudinaryClient(
         '892238245892288', '_qf4GlSi4m1TQOd44N_V5lHJKq0', 'gorge');
@@ -51,13 +63,15 @@ class _ImagePreviewState extends State<ImagePreview> {
       setState(() {
         showLoader = false;
       });
-      Navigator.push(
+      
+        Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => MyHomePage(
             name: name,
           ),
         ),
+        (Route<dynamic> route) => false
       );
     }).catchError((error) => {
    //   print(error);
@@ -189,7 +203,7 @@ class _ImagePreviewState extends State<ImagePreview> {
           new Positioned(
             top: MediaQuery.of(context).size.height * 0.04,
             child: Container(
-        width: MediaQuery.of(context).size.width * 0.85,
+        width: MediaQuery.of(context).size.width * 0.90,
         child: TransparentHeader(
                     isRecognized: newName != null ? true : false)),
           ),
