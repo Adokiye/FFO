@@ -111,7 +111,8 @@ class _CameraState extends State<Camera> {
                             fontWeight: FontWeight.w600)),
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 10.0),
-
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                      
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border(
@@ -131,6 +132,7 @@ class _CameraState extends State<Camera> {
                     ),
                     Container(
               //        margin: EdgeInsets.symmetric(vertical: 10.0),
+                      padding: EdgeInsets.symmetric(vertical: 5.0, ),
                       
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -152,6 +154,8 @@ class _CameraState extends State<Camera> {
                     ),
                     Container(
                   //    margin: EdgeInsets.only(bottom: 10.0),
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+
                       decoration: BoxDecoration(
                         color: Colors.white,
                                              border: Border(
